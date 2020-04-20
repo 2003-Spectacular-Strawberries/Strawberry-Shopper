@@ -1,8 +1,8 @@
 import React from 'react'
-import {connect} from 'react-redux'
+// import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Navbar} from './components'
-import Routes from './routes'
+// import {Navbar} from './components'
+// import Routes from './routes'
 
 class AllProducts extends React.Component {
   render() {
@@ -19,7 +19,7 @@ class AllProducts extends React.Component {
           {/* {products.map((product) => {
             // name, price, quantity, image, add to cart button
 
-          })} */}
+          })}  we are going to want to make the div for each item to be a link to the single item */}
         </div>
       </div>
     )
