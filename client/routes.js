@@ -30,7 +30,7 @@ class Routes extends Component {
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/allproducts" component={AllProducts} />
-        <Route exact path="/singleproduct" component={SingleProduct} />
+        <Route exact path="/singleproduct/:id" component={SingleProduct} />
         <Route exact path="/allusers" component={AllUsers} />
         <Route exact path="/singleuser" component={SingleUser} />
         {isLoggedIn && (
@@ -38,6 +38,7 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             <Route exact path="/allproducts" component={AllProducts} />
+            <Route exact path="/singleproduct/:id" component={SingleProduct} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
