@@ -1,43 +1,20 @@
 import React from 'react'
-// import {connect} from 'react-redux'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-// import {Navbar} from './components'
-// import Routes from './routes'
-
-const testArrayOfObjects = [
-  {
-    name: 'strawberryShortCake',
-    price: 10,
-    image:
-      'https://image.shutterstock.com/image-vector/strawberry-iconvector-illustration-flat-design-260nw-1371070088.jpg',
-    id: 1,
-    description: 'oasjfo askdjf lj woij ls;adf laskdf ;askdj ;lasdfj '
-  },
-  {
-    name: 'strawberry',
-    price: 2,
-    image:
-      ' https://image.shutterstock.com/image-vector/strawberry-iconvector-illustration-flat-design-260nw-1371070088.jpg',
-    id: 2,
-    description: 'oasjfo askdjf lj woij ls;adf laskdf ;askdj ;lasdfj '
-  },
-
-  {
-    name: 'strawberryJam',
-    price: 30,
-    image:
-      'https://image.shutterstock.com/image-vector/strawberry-iconvector-illustration-flat-design-260nw-1371070088.jpg',
-    id: 3,
-    description: 'oasjfo askdjf lj woij ls;adf laskdf ;askdj ;lasdfj '
-  }
-]
+import {fetchProducts} from '../store/products'
 
 class AllProducts extends React.Component {
+  componentDidMount() {
+    this.props.fetchProducts()
+  }
+
   render() {
+    const {products} = this.props.products
+
     return (
       <div className="all-products">
         <div className="all-products-container">
-          {testArrayOfObjects.map(product => {
+          {products.map(product => {
             return (
               <div className="single-product" key={product.id}>
                 <Link to={`/singleproduct/${product.id}`}>{product.name}</Link>
@@ -55,4 +32,12 @@ class AllProducts extends React.Component {
   }
 }
 
-export default AllProducts
+const mapState = state => ({
+  products: state.products
+})
+
+const mapDispatch = dispatch => ({
+  fetchProducts: () => dispatch(fetchProducts())
+})
+
+export default connect(mapState, mapDispatch)(AllProducts)
