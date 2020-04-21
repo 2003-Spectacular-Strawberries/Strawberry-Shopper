@@ -7,31 +7,6 @@ import axios from 'axios'
 
 //make sure that the user information is protected when it is sent.
 
-const testArrayOfUsers = [
-  {
-    name: 'Mike',
-    email: 'mike@gmail.com',
-    password: 123,
-    imageUrl: null,
-    id: 1
-  },
-  {
-    name: 'Dan',
-    email: 'dan@gmail.com',
-    password: 123,
-    imageUrl: null,
-    id: 2
-  },
-
-  {
-    name: 'Pete',
-    email: 'pete@gmail.com',
-    password: 123,
-    imageUrl: null,
-    id: 3
-  }
-]
-
 export class AllUsers extends React.Component {
   constructor() {
     super()
@@ -41,9 +16,6 @@ export class AllUsers extends React.Component {
   async componentDidMount() {
     if (this.props.fetchUsers) {
       try {
-        {
-          console.log('kaslfasdf')
-        }
         await this.props.fetchUsers()
       } catch (err) {
         console.log(err)
@@ -61,19 +33,18 @@ export class AllUsers extends React.Component {
   }
 
   render() {
+    console.log('before return', this.props.users)
     return (
       <div className="all-users">
         <div className="all-users-container">
           {this.props.users && this.props.users.length > 0 ? (
             this.props.users.map(user => {
               return (
-                <div className="single-product" key={user.id}>
+                <div className="single-user" key={user.id}>
                   <Link to={`/singleuser/${user.id}`}>
-                    {user.name}
                     <img src={user.imageUrl} alt="" />
+                    <h2>{user.email}</h2>
                   </Link>
-                  <h2>{user.email}</h2>
-                  <p>{user.id}</p>)
                 </div>
               )
             })
