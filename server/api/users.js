@@ -1,6 +1,5 @@
-
 const router = require('express').Router()
-const { User } = require('../db/models')
+const {User} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -17,10 +16,10 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const user = await User.findOne({
-        where: { 
-            id: req.params.id
-        },
-        attributes: ['id', 'email', 'imageUrl', 'isAdmin']
+      where: {
+        id: req.params.id
+      },
+      attributes: ['id', 'email', 'imageUrl', 'isAdmin']
     })
     res.json(user)
   } catch (err) {
@@ -64,7 +63,7 @@ router.delete('/:id', async (req, res, next) => {
         id: req.params.id
       }
     })
-    await user.destroy(user)
+    await user.destroy()
     res.status(200).send('User deleted.')
   } catch (err) {
     next(err)
