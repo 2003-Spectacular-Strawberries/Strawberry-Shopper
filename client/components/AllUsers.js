@@ -1,8 +1,7 @@
 import React from 'react'
-// import {connect} from 'react-redux'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-// import {Navbar} from './components'
-// import Routes from './routes'
+import {setUsers, fetchUsers, removeUser} from '../redux/students.js'
 import axios from 'axios'
 // import {User} from '../../server/db/models'
 
@@ -33,29 +32,69 @@ const testArrayOfUsers = [
   }
 ]
 
-class AllUsers extends React.Component {
+export class AllUsers extends React.Component {
+  constructor() {
+    super()
+    this.removeUser = this.removeUser.bind(this)
+  }
+
+  async componentDidMount() {
+    if (this.props.fetchUsers) {
+      try {
+        await this.props.fetchUsers()
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+
+  async deleteUser(id) {
+    try {
+      await axios.delete(`/api/users/${id}`)
+      this.props.removeUser(id)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   render() {
-    console.log('!!!!!!!!!')
     return (
       <div className="all-users">
         <div className="all-users-container">
-          {testArrayOfUsers.map(user => {
-            return (
-              <div className="single-user" key={user.id}>
-                {/* <Link to={`/singleuser/${user.id}`}>{user.name}</Link>
-                <Link to="/singleuser/id">
-                  <img src={testArrayOfUsers.imageUrl} alt="" />
-                </Link> */}
-                <h1>{user.name}</h1>
-                <h2>{user.email}</h2>
-                <p>{user.id}</p>
-              </div>
-            )
-          })}
+          {this.props.users && this.props.users.length > 0 ? (
+            this.props.users.map(user => {
+              return (
+                <div className="single-product" key={user.id}>
+                  <Link to={`/singleuser/${user.id}`}>
+                    {user.name}
+                    <img src={user.imageUrl} alt="" />
+                  </Link>
+                  <h1>{user.name}</h1>
+                  <h2>{user.email}</h2>
+                  <p>{user.id}</p>)
+                </div>
+              )
+            })
+          ) : (
+            <h3>No Users</h3>
+          )}
         </div>
       </div>
     )
   }
 }
 
-export default AllUsers
+const mapState = state => {
+  return {
+    users: state.users
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    fetchUsers: () => dispatch(fetchUsers()),
+    removeUser: id => dispatch(removeUser(id))
+  }
+}
+
+export default connect(mapState, mapDispatch)(AllUsers)
