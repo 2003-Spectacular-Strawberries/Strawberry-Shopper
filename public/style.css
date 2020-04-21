@@ -1,12 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
 body {
-  font-family: sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 a {
   text-decoration: none;
+  color: #333;
 }
 
-label {
+/* label {
   display: block;
 }
 
@@ -18,4 +21,58 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+} */
+
+.navbar-header {
+  text-transform: uppercase;
+  color: crimson;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-logged {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 3rem;
+}
+
+.navbar-left a {
+  margin-right: 1rem;
+}
+
+.navbar-right a {
+  margin-left: 1rem;
+}
+
+/* All Products */
+
+.all-products {
+  padding: 0 3rem;
+}
+
+.all-products-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.single-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-transform: uppercase;
+  background: crimson;
+  color: #fff;
+  border: 1px solid crimson;
+  transition: 0.2s all ease;
+}
+
+.btn:hover {
+  background: #fff;
+
+  color: crimson;
 }
