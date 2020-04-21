@@ -1,23 +1,21 @@
 import React from 'react'
-// import {connect} from 'react-redux'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {fetchProduct} from '../store/singleProduct'
 // import {Navbar} from './components'
 // import Routes from './routes'
 
-const product = {
-  name: 'strawberryShortCake',
-  price: 10,
-  image:
-    'https://image.shutterstock.com/image-vector/strawberry-iconvector-illustration-flat-design-260nw-1371070088.jpg',
-  id: 1,
-  description:
-    'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta, aliquid quibusdam! Voluptates magni dolor molestias iste at maxime maiores nostrum.'
-}
-
 class SingleProduct extends React.Component {
+  componentDidMount() {
+    const productId = this.props.match.params.id
+    this.props.fetchProduct(productId)
+  }
+
   render() {
+    const {product} = this.props.product
+
     return (
-      <div className="single-product" key={product.id}>
+      <div className="single-product">
         <h1>{product.name}</h1>
         <img src={product.image} alt="" />
         <p>{product.price}</p>
@@ -28,4 +26,12 @@ class SingleProduct extends React.Component {
   }
 }
 
-export default SingleProduct
+const mapState = state => ({
+  product: state.product
+})
+
+const mapDispatch = dispatch => ({
+  fetchProduct: productId => dispatch(fetchProduct(productId))
+})
+
+export default connect(mapState, mapDispatch)(SingleProduct)
