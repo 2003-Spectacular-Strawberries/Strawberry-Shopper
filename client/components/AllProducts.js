@@ -44,8 +44,8 @@ class AllProducts extends React.Component {
                 <Link to="/singleproduct/id">
                   <img src={product.image} alt="" />
                 </Link>
-                <p>{product.price}</p>
-                <button>Add</button>
+                <p>Price: ${product.price}</p>
+                <button className="btn">Add</button>
               </div>
             )
           })}
