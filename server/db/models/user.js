@@ -30,7 +30,7 @@ const User = db.define('user', {
   imageUrl: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isUrl: true
     }

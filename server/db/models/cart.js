@@ -1,11 +1,7 @@
-// const Sequelize = require('sequelize')
-// const db = require('../db')
+const Sequelize = require('sequelize')
+const db = require('../db')
 
-// const Cart = db.define('cart', {
-//   items: {
-//     type: Sequelize.HSTORE,
-//     allowNull: true
-//   }
-// })
+const Cart = db.define('cart', {})
 
-// module.exports = Cart
+module.exports = Cart
+

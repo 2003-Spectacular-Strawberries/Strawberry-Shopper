@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product, Review, Cart, CartItems} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -9,10 +9,43 @@ async function seed() {
 
   const users = await Promise.all([
     User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({email: 'murphy@email.com', password: '123'}),
+    User.create({email: 'straw@berry.com', password: '123'})
+  ])
+
+  const products = await Promise.all([
+    Product.create({name: 'Strawberry Smoothie', price: 1.99, stock: 4}),
+    Product.create({name: 'Strawberry Soap', price: 2.99, stock: 5}),
+    Product.create({
+      name: 'Strawberry Pattern Boardshorts',
+      price: 0.99,
+      stock: 3
+    })
+  ])
+
+  const reviews = await Promise.all([
+    Review.create({rating: 5, userId: 1, productId: 1})
+  ])
+
+  const carts = await Promise.all([
+    Cart.create({userId: 1}),
+    Cart.create({userId: 2}),
+    Cart.create({userId: 3})
+  ])
+
+  const cartItems = await Promise.all([
+    CartItems.create({cartId: 1, productId: 1, quantity: 2}),
+    CartItems.create({cartId: 2, productId: 1, quantity: 1}),
+    CartItems.create({cartId: 2, productId: 2, quantity: 2}),
+    CartItems.create({cartId: 2, productId: 3, quantity: 1}),
+    CartItems.create({cartId: 3, productId: 3, quantity: 1})
   ])
 
   console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${products.length} products`)
+  console.log(`seeded ${reviews.length} reviews`)
+  console.log(`seeded ${carts.length} carts`)
+  console.log(`seeded ${cartItems.length} cartItems`)
   console.log(`seeded successfully`)
 }
 
