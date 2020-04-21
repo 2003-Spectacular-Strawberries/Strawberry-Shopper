@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {setUsers, fetchUsers, removeUser} from '../redux/students.js'
+import {setUsers, fetchUsers, removeUser} from '../redux/allUsers.js'
 import axios from 'axios'
 // import {User} from '../../server/db/models'
 
@@ -41,6 +41,9 @@ export class AllUsers extends React.Component {
   async componentDidMount() {
     if (this.props.fetchUsers) {
       try {
+        {
+          console.log('kaslfasdf')
+        }
         await this.props.fetchUsers()
       } catch (err) {
         console.log(err)
@@ -48,7 +51,7 @@ export class AllUsers extends React.Component {
     }
   }
 
-  async deleteUser(id) {
+  async removeUser(id) {
     try {
       await axios.delete(`/api/users/${id}`)
       this.props.removeUser(id)
@@ -69,7 +72,6 @@ export class AllUsers extends React.Component {
                     {user.name}
                     <img src={user.imageUrl} alt="" />
                   </Link>
-                  <h1>{user.name}</h1>
                   <h2>{user.email}</h2>
                   <p>{user.id}</p>)
                 </div>

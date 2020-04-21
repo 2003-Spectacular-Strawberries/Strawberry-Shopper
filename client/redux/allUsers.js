@@ -15,7 +15,9 @@ export const removeUser = id => {
 export const fetchUsers = () => {
   return async dispatch => {
     try {
+      console.log('!!!!!!')
       const {data} = await axios.get('/api/users')
+      console.log('!!!!!!after data', data)
       return dispatch(setUsers(data))
     } catch (err) {
       console.log(err)
