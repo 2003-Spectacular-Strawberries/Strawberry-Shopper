@@ -23,10 +23,17 @@ form div {
   display: inline-block;
 } */
 
+.navbar-header {
+  text-transform: uppercase;
+  color: crimson;
+  display: flex;
+  justify-content: center;
+}
+
 .navbar-logged {
   display: flex;
   justify-content: space-between;
-  padding: 0 3rem;
+  padding: 1rem 3rem;
 }
 
 .navbar-left a {
@@ -58,4 +65,14 @@ form div {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   text-transform: uppercase;
+  background: crimson;
+  color: #fff;
+  border: 1px solid crimson;
+  transition: 0.2s all ease;
+}
+
+.btn:hover {
+  background: #fff;
+
+  color: crimson;
 }

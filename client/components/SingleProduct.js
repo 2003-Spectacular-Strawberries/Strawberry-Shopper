@@ -10,7 +10,8 @@ const product = {
   image:
     'https://image.shutterstock.com/image-vector/strawberry-iconvector-illustration-flat-design-260nw-1371070088.jpg',
   id: 1,
-  description: 'oasjfo askdjf lj woij ls;adf laskdf ;askdj ;lasdfj '
+  description:
+    'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Soluta, aliquid quibusdam! Voluptates magni dolor molestias iste at maxime maiores nostrum.'
 }
 
 class SingleProduct extends React.Component {
@@ -20,7 +21,8 @@ class SingleProduct extends React.Component {
         <h1>{product.name}</h1>
         <img src={product.image} alt="" />
         <p>{product.price}</p>
-        <button>Add</button>
+        <p>{product.description}</p>
+        <button className="btn">Add</button>
       </div>
     )
   }
