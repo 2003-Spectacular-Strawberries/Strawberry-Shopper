@@ -29,7 +29,6 @@ const User = db.define('user', {
   // },
   imageUrl: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: true,
     validate: {
       isUrl: true
