@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import AddButton from './AddButton'
 import {fetchProduct} from '../store/singleProduct'
 // import {Navbar} from './components'
 // import Routes from './routes'
@@ -14,13 +15,15 @@ class SingleProduct extends React.Component {
   render() {
     const {product} = this.props.product
 
+    // Have to ensure that ID of current user and current product is passed down to addbutton component
     return (
       <div className="single-product">
         <h1>{product.name}</h1>
         <img src={product.image} alt="" />
         <p>{product.price}</p>
         <p>{product.description}</p>
-        <button className="btn">Add</button>
+
+        <AddButton productId={product.id} />
       </div>
     )
   }
