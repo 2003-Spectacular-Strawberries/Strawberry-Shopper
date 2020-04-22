@@ -10,21 +10,26 @@ const testOrder = [
 ]
 
 class Cart extends React.Component {
-  //   componentDidMount() {
-  //     this.props.fetchOrder()
-  //   }
+  componentDidMount() {
+    // const userId = this.match.params
+    this.props.fetchOrder(3)
+  }
 
   render() {
-    // const {products} = this.props.products
+    const products = this.props.order.order.products || []
+    console.log(products)
 
     return (
       <table>
         <tbody>
-          {testOrder.map(product => {
+          {products.map(product => {
             return (
               <tr key={product.id}>
                 <td>
-                  <input type="text" placeholder={product.quantity} />
+                  <input
+                    type="text"
+                    placeholder={product.orderItems.quantity}
+                  />
                 </td>
                 <td>{product.name}</td>
                 <td>${(product.price / 100).toFixed(2)}</td>
@@ -46,14 +51,12 @@ class Cart extends React.Component {
   }
 }
 
-// const mapState = state => ({
-//     orderProducts: state.orderProducts
-// })
+const mapState = state => ({
+  order: state.order
+})
 
-// const mapDispatch = dispatch => ({
-//     fetchOrder: () => dispatch(fetchOrder())
-// })
+const mapDispatch = dispatch => ({
+  fetchOrder: userId => dispatch(fetchOrder(userId))
+})
 
-// export default connect(mapState, mapDispatch)(Cart)
-
-export default Cart
+export default connect(mapState, mapDispatch)(Cart)
