@@ -8,26 +8,26 @@ const Product = db.define('product', {
     allowNull: false
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-        isNumeric: true,
-        min: 0.01
+      isNumeric: true,
+      min: 1
     }
   },
   stock: {
     type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
-        isNumeric: true,
-        min: 0
+      isNumeric: true,
+      min: 0
     }
   },
   imageUrl: {
     type: Sequelize.STRING,
     default: 'https://i.imgur.com/POLRlNo.jpg',
     validate: {
-        isUrl: true
+      isUrl: true
     }
   },
   description: {

@@ -33,7 +33,6 @@ export class AllUsers extends React.Component {
   }
 
   render() {
-    console.log('before return', this.props.users)
     return (
       <div className="all-users">
         <div className="all-users-container">
@@ -42,7 +41,7 @@ export class AllUsers extends React.Component {
               return (
                 <div className="single-user" key={user.id}>
                   <Link to={`/singleuser/${user.id}`}>
-                    <img src={user.imageUrl} alt="" />
+                    <img src={user.imageUrl} alt="" className="user-image" />
                     <h2>{user.email}</h2>
                   </Link>
                 </div>

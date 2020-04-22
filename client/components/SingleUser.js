@@ -17,8 +17,15 @@ export class SingleUser extends React.Component {
   render() {
     return this.props.singleUser.id ? (
       <div className="single-user" key={this.props.singleUser.id}>
-        <h1>{this.props.singleUser.email}</h1>
-        <img src={this.props.singleUser.imageUrl} alt="" />
+        <h1>{`${this.props.singleUser.firstName} ${
+          this.props.singleUser.lastName
+        }`}</h1>
+        <img
+          src={this.props.singleUser.imageUrl}
+          alt=""
+          className="user-image"
+        />
+        <h3>{this.props.singleUser.email}</h3>
       </div>
     ) : (
       <h3>No User</h3>

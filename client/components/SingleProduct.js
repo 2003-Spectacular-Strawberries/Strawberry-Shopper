@@ -19,8 +19,8 @@ class SingleProduct extends React.Component {
     return (
       <div className="single-product">
         <h1>{product.name}</h1>
-        <img src={product.image} alt="" />
-        <p>{product.price}</p>
+        <img src={product.imageUrl} alt="" className="product-image" />
+        <p>${(product.price / 100).toFixed(2)}</p>
         <p>{product.description}</p>
 
         <AddButton productId={product.id} />

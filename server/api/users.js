@@ -4,9 +4,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const users = await User.findAll({
-      attributes: ['id', 'email', 'imageUrl', 'isAdmin']
-    })
+    const users = await User.findAll()
     res.json(users)
   } catch (err) {
     next(err)
@@ -18,8 +16,7 @@ router.get('/:id', async (req, res, next) => {
     const user = await User.findOne({
       where: {
         id: req.params.id
-      },
-      attributes: ['id', 'email', 'imageUrl', 'isAdmin']
+      }
     })
     res.json(user)
   } catch (err) {

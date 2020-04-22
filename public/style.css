@@ -76,3 +76,15 @@ form div {
 
   color: crimson;
 }
+
+/* All Users */
+
+.user-image {
+  width: 100px;
+  height: 100px;
+}
+
+.product-image {
+  width: 100px;
+  height: 100px;
+}

@@ -10,9 +10,7 @@ export const setUser = user => {
 export const fetchUser = id => {
   return async dispatch => {
     try {
-      console.log('trying to fetch user #', id)
       const {data} = await axios.get(`/api/users/${id}`)
-      console.log(data)
       return dispatch(setUser(data))
     } catch (err) {
       console.log(err)
