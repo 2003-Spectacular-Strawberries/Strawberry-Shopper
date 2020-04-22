@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const cart = await Cart.findOne({
-      where: {id: req.params.id},
+      where: {userId: req.params.id},
       include: {model: Product}
     })
     res.json(cart)

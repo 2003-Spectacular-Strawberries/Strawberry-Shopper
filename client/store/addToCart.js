@@ -16,12 +16,9 @@ const setQuantity = quantity => ({
 export const addQuantity = (productId, userId, quantity) => {
   return async dispatch => {
     try {
-      const res = await axios.get(`/api/users/${userId}`)
-      console.log(res.data)
+      const res = await axios.get(`/api/carts/${userId}`)
 
-      const res2 = await axios.get(`/api/carts/${res.data.id}`)
-
-      const cartId = res2.data.id
+      const cartId = res.data.id
       await axios.put(`/api/${cartId}/${productId}`, quantity)
     } catch (error) {
       console.log(error)
