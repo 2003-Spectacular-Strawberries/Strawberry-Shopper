@@ -10,15 +10,21 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 
     <nav className="navbar">
       {isLoggedIn ? (
-        <div>
+        <div className="navbar-logged">
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <Link to="/allproducts">All Products</Link>
-          <Link to="/allusers">All Users</Link>
+          <div className="navbar-left">
+            <Link to="/home">Home</Link>
+            <Link to="/allproducts">All Products</Link>
+            <Link to="/allusers">All Users</Link>
+            <Link to="/cart">Cart</Link>
+          </div>
 
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
+          <div className="navbar-right">
+            <Link to="/cart">Cart</Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
         </div>
       ) : (
         <div className="navbar-logged">
