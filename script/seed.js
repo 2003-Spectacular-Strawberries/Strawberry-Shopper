@@ -1,7 +1,13 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Product, Review, Cart, CartItems} = require('../server/db/models')
+const {
+  User,
+  Product,
+  Review,
+  Order,
+  OrderItems
+} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -214,25 +220,39 @@ async function seed() {
     Review.create({rating: 5, userId: 1, productId: 1})
   ])
 
-  const carts = await Promise.all([
-    Cart.create({userId: 1}),
-    Cart.create({userId: 2}),
-    Cart.create({userId: 3})
+  const orders = await Promise.all([
+    Order.create({
+      userId: 1,
+      email: 'sbaddict@gmail.com',
+      shipping: '23 Berry Boulevard, Straw, SB, 11123',
+      billing: '23 Berry Boulevard, Straw, SB, 11123',
+      price: 10.99,
+      isCart: false
+    }),
+    Order.create({
+      userId: 2,
+      email: 'strawberrySommelier@gmail.com',
+      shipping: '107 Straw Street, Berry, SB, 10003',
+      billing: '107 Straw Street, Berry, SB, 10003',
+      price: 99.99,
+      isCart: false
+    }),
+    Order.create({userId: 3, isCart: true})
   ])
 
-  const cartItems = await Promise.all([
-    CartItems.create({cartId: 1, productId: 1, quantity: 2}),
-    CartItems.create({cartId: 2, productId: 1, quantity: 1}),
-    CartItems.create({cartId: 2, productId: 2, quantity: 2}),
-    CartItems.create({cartId: 2, productId: 3, quantity: 1}),
-    CartItems.create({cartId: 3, productId: 3, quantity: 1})
+  const orderItems = await Promise.all([
+    OrderItems.create({orderId: 1, productId: 1, quantity: 2}),
+    OrderItems.create({orderId: 2, productId: 1, quantity: 1}),
+    OrderItems.create({orderId: 2, productId: 2, quantity: 2}),
+    OrderItems.create({orderId: 2, productId: 3, quantity: 1}),
+    OrderItems.create({orderId: 3, productId: 3, quantity: 1})
   ])
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
   console.log(`seeded ${reviews.length} reviews`)
-  console.log(`seeded ${carts.length} carts`)
-  console.log(`seeded ${cartItems.length} cartItems`)
+  console.log(`seeded ${orders.length} orders`)
+  console.log(`seeded ${orderItems.length} orderItems`)
   console.log(`seeded successfully`)
 }
 
