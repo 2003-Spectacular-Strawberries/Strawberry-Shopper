@@ -27,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', isAdminMiddleware, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     await Product.create({
       email: req.body.email,
@@ -42,7 +42,7 @@ router.post('/', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
-router.put('/:id', isAdminMiddleware, async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const product = await Product.findOne({
       where: {
@@ -56,7 +56,7 @@ router.put('/:id', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
-router.delete('/:id', isAdminMiddleware, async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const product = await Product.findOne({
       where: {
