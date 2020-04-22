@@ -4,27 +4,31 @@ const db = require('../db')
 const Order = db.define('order', {
   email: {
     type: Sequelize.STRING,
-    allowNull: false
+    unique: true,
+    allowNull: true,
+    validate: {
+      isEmail: true
+    }
   },
   shipping: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   billing: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: true
   },
   date: {
-    type: Sequelize.DATE
-    // allowNull: false
+    type: Sequelize.DATE,
+    allowNull: true
   },
   price: {
-    type: Sequelize.FLOAT,
-    allowNull: false
+    type: Sequelize.DECIMAL,
+    allowNull: true
   },
-  orderNumber: {
-    type: Sequelize.INTEGER
-    // allowNull: false
+  isCart: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true
   }
 })
 

@@ -7,8 +7,8 @@ const OrderItems = db.define('orderItems', {
     allowNull: false
   },
   price: {
-    type: Sequelize.FLOAT,
-    allowNull: false
+    type: Sequelize.DECIMAL,
+    allowNull: true
   }
 })
 
