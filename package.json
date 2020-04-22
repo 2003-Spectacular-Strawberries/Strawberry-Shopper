@@ -1,7 +1,7 @@
 {
   "name": "strawberry-shopper",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "This is your online shopping website for all your strawberry needs!!",
   "engines": {
     "node": ">= 7.0.0"
   },
