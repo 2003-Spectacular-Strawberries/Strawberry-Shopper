@@ -1,4 +1,6 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {addQuantity} from '../store/addToCart'
 
 class AddButton extends React.Component {
   constructor() {
@@ -18,14 +20,17 @@ class AddButton extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    // try {
-    //   const quantity = this.state.quantity3
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    try {
+      const quantity = this.state.quantity
+      const {productId} = this.props
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {
+    console.log('BUTTON')
+
     return (
       <form onSubmit={this.handleSubmit}>
         <input
@@ -42,4 +47,13 @@ class AddButton extends React.Component {
   }
 }
 
-export default AddButton
+const mapState = state => ({
+  addToCart: state.addToCart
+})
+
+const mapDispatch = dispatch => ({
+  addQuantity: (productId, userId, quantity) =>
+    dispatch(addQuantity(productId, userId, quantity))
+})
+
+export default connect(mapState, mapDispatch)(AddButton)
