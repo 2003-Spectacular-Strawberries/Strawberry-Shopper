@@ -11,6 +11,14 @@ const User = db.define('user', {
       isEmail: true
     }
   },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   password: {
     type: Sequelize.STRING,
     // Making `.password` act like a func hides it when serializing to JSON.
@@ -29,14 +37,14 @@ const User = db.define('user', {
   // },
   imageUrl: {
     type: Sequelize.STRING,
-    allowNull: true,
+    defaultValue: 'https://i.imgur.com/ATdQhg1.jpg',
     validate: {
       isUrl: true
     }
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
-    default: false
+    defaultValue: false
   },
   googleId: {
     type: Sequelize.STRING,

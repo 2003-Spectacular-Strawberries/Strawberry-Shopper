@@ -19,9 +19,13 @@ class AllProducts extends React.Component {
               <div className="single-product" key={product.id}>
                 <Link to={`/singleproduct/${product.id}`}>{product.name}</Link>
                 <Link to="/singleproduct/id">
-                  <img src={product.image} alt="" />
+                  <img
+                    src={product.imageUrl}
+                    alt=""
+                    className="product-image"
+                  />
                 </Link>
-                <p>Price: ${product.price}</p>
+                <p>Price ${(product.price / 100).toFixed(2)}</p>
                 <button className="btn">Add</button>
               </div>
             )
