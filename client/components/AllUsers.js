@@ -58,7 +58,8 @@ export class AllUsers extends React.Component {
 
 const mapState = state => {
   return {
-    users: state.users
+    users: state.users,
+    user: state.user
   }
 }
 
