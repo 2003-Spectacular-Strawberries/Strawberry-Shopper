@@ -25,7 +25,6 @@ class AddButton extends React.Component {
   }
 
   render() {
-    console.log('this.state.quantity', this.state.quantity)
     return (
       <form onSubmit={this.handleSubmit}>
         <input
