@@ -26,14 +26,15 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    await Product.create({
-      email: req.body.email,
-      password: req.body.password,
-      // salt: {},
+    const product = await Product.create({
+      name: req.body.name,
+      price: req.body.price,
+      stock: req.body.stock,
       imageUrl: req.body.imageUrl,
-      googleId: req.body.googleId
+      description: req.body.description
     })
-    res.status(201).redirect('/login')
+    res.status(201)
+    res.json(product)
   } catch (err) {
     next(err)
   }

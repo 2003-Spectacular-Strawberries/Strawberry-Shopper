@@ -1,9 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchProducts} from '../store/products'
+import {fetchProducts, deleteProduct} from '../store/products'
 import AllUsers from './AllUsers'
-import AllProducts from './AllProducts'
 import NewProduct from './NewProduct'
 
 //in order to test this you need to first go to server/auth/index.js and comment out lines 8-14.  (this is the if/else statement inside of the router.post(./login))  this appears to be fixed, but i am leaving this note here until i am sure
@@ -24,30 +23,32 @@ class AdminPage extends React.Component {
   render() {
     return (
       <div className="adminPage-container">
-        <h1
-          className="adminHeaders"
-          onClick={() => {
-            this.setState({section: 'products'})
-          }}
-        >
-          Products
-        </h1>
-        <h1
-          className="adminHeaders"
-          onClick={() => {
-            this.setState({section: 'newproduct'})
-          }}
-        >
-          NewProducts
-        </h1>
-        <h1
-          className="adminHeaders"
-          onClick={() => {
-            this.setState({section: 'users'})
-          }}
-        >
-          Users
-        </h1>
+        <div className="adminHeadersContainer">
+          <h1
+            className="adminHeaders"
+            onClick={() => {
+              this.setState({section: 'products'})
+            }}
+          >
+            Products
+          </h1>
+          <h1
+            className="adminHeaders"
+            onClick={() => {
+              this.setState({section: 'newproduct'})
+            }}
+          >
+            New Product Form
+          </h1>
+          <h1
+            className="adminHeaders"
+            onClick={() => {
+              this.setState({section: 'users'})
+            }}
+          >
+            Users
+          </h1>
+        </div>
 
         {this.state.section === 'products' ? (
           <div className="all-products">
@@ -65,7 +66,16 @@ class AdminPage extends React.Component {
                         className="product-image"
                       />
                     </Link>
-                    <button className="btn">Delete</button>
+                    <button
+                      className="btn"
+                      type="submit"
+                      onClick={event => {
+                        event.preventDefault()
+                        this.props.deleteProduct(product.id)
+                      }}
+                    >
+                      Delete
+                    </button>
                     <p>Price ${(product.price / 100).toFixed(2)}</p>
                   </div>
                 )
@@ -87,7 +97,8 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  fetchProducts: () => dispatch(fetchProducts())
+  fetchProducts: () => dispatch(fetchProducts()),
+  deleteProduct: id => dispatch(deleteProduct(id))
 })
 
 export default connect(mapState, mapDispatch)(AdminPage)
