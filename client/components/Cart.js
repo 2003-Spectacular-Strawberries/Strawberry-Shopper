@@ -52,7 +52,8 @@ class Cart extends React.Component {
 }
 
 const mapState = state => ({
-  order: state.order
+  order: state.order,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({

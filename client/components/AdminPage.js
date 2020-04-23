@@ -69,7 +69,8 @@ class AdminPage extends React.Component {
 }
 
 const mapState = state => ({
-  products: state.products
+  products: state.products,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({

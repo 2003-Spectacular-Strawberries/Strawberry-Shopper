@@ -35,7 +35,8 @@ export class SingleUser extends React.Component {
 
 const mapState = state => {
   return {
-    singleUser: state.singleUser
+    singleUser: state.singleUser,
+    user: state.user
   }
 }
 
