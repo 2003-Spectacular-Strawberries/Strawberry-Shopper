@@ -12,13 +12,18 @@ class AllProducts extends React.Component {
     const {products} = this.props.products
 
     return (
-      <div className="all-products">
-        <div className="all-products-container">
+      <div className="all-products-container">
+        <div className="all-products">
           {products.map(product => {
             return (
               <div className="single-product" key={product.id}>
-                <Link to={`/singleproduct/${product.id}`}>{product.name}</Link>
-                <Link to="/singleproduct/id">
+                <Link
+                  to={`/singleproduct/${product.id}`}
+                  className="single-product-name"
+                >
+                  {product.name}
+                </Link>
+                <Link to={`/singleproduct/${product.id}`}>
                   <img
                     src={product.imageUrl}
                     alt=""
@@ -37,7 +42,8 @@ class AllProducts extends React.Component {
 }
 
 const mapState = state => ({
-  products: state.products
+  products: state.products,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({

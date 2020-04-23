@@ -1,9 +1,12 @@
 import axios from 'axios'
 
-const initialState = {}
+const initialState = {
+  order: {}
+}
 
 // Action Types
 const SET_ORDER = 'SET_ORDER'
+const DELETED_PRODUCT = 'DELETE_PRODUCT'
 
 // Action Creators
 export const setOrder = order => ({
@@ -11,14 +14,31 @@ export const setOrder = order => ({
   order
 })
 
+export const deletedProduct = productId => ({
+  type: DELETED_PRODUCT,
+  productId
+})
+
 // Thunk Creators
 export const fetchOrder = userId => {
   return async dispatch => {
     try {
-      // We need the orderId in order to get the order
-      // Look up order through userId first
-      // we need to find the order that is not yet complete and is associated with the userId
-      // const res = await axios.get(``)
+      const {data} = await axios.get(`/api/orders/${userId}/cart`)
+      dispatch(setOrder(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const deleteProduct = (orderId, productId) => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/orderItems/${orderId}/product/${productId}`)
+
+      // Must set order again to reflect the new items back on state
+
+      dispatch(deletedProduct(productId))
     } catch (error) {
       console.log(error)
     }
@@ -26,9 +46,22 @@ export const fetchOrder = userId => {
 }
 
 // Reducer
-
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_ORDER: {
+      return {...state, order: action.order}
+    }
+    case DELETED_PRODUCT:
+      const orderProducts = state.order.products
+      const filteredOrder = orderProducts.filter(
+        product => product.id !== action.productId
+      )
+
+      state.order.products = filteredOrder
+
+      return {
+        ...state
+      }
     default:
       return state
   }

@@ -1,5 +1,8 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
+const isAdminMiddleware = require('../auth/isAdmin')
+const isUserMiddleware = require('../auth/isUser')
+
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -29,12 +32,12 @@ router.post('/', async (req, res, next) => {
     const product = await Product.create({
       name: req.body.name,
       price: req.body.price,
-      stock: req.body.stock,
+
       imageUrl: req.body.imageUrl,
+      stock: req.body.stock,
       description: req.body.description
     })
-    res.status(201)
-    res.json(product)
+    res.status(201).json(product)
   } catch (err) {
     next(err)
   }

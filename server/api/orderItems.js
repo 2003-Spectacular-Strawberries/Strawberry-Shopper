@@ -18,35 +18,24 @@ router.get('/:orderId/product/:productId', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
-  try {
-    await OrderItems.create({
-      userId: req.body.userId,
-      productId: req.body.productId,
-      quantity: req.body.quantity
-    })
-    res.status(201).send('Item added!')
-  } catch (err) {
-    next(err)
-  }
-})
-
+//make sure to send total desired quantity from front-ended
+//or see if can code a += functionality into this route
 router.put('/:orderId/product/:productId', async (req, res, next) => {
   try {
-    const orderItem = await OrderItems.findOne({
+    const orderItem = await OrderItems.findOrCreate({
       where: {
         orderId: req.params.orderId,
         productId: req.params.productId
-      }
+      },
+      quantity: req.body.quantity
     })
-    await orderItem.update(req.body)
     res.status(200).json(orderItem)
   } catch (err) {
     next(err)
   }
 })
 
-router.delete('/:orderId/products/:productId', async (req, res, next) => {
+router.delete('/:orderId/product/:productId', async (req, res, next) => {
   try {
     const orderItem = await OrderItems.findOne({
       where: {

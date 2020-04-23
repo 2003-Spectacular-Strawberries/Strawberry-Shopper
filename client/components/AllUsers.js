@@ -14,12 +14,10 @@ export class AllUsers extends React.Component {
   }
 
   async componentDidMount() {
-    if (this.props.fetchUsers) {
-      try {
-        await this.props.fetchUsers()
-      } catch (err) {
-        console.log(err)
-      }
+    try {
+      await this.props.fetchUsers()
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -34,13 +32,13 @@ export class AllUsers extends React.Component {
 
   render() {
     return (
-      <div className="all-users">
-        <div className="all-users-container">
+      <div className="all-users-container">
+        <div className="all-users">
           {this.props.users && this.props.users.length > 0 ? (
             this.props.users.map(user => {
               return (
-                <div className="single-user" key={user.id}>
-                  <Link to={`/singleuser/${user.id}`}>
+                <div key={user.id}>
+                  <Link to={`/singleuser/${user.id}`} className="single-user">
                     <img src={user.imageUrl} alt="" className="user-image" />
                     <h2>{user.email}</h2>
                   </Link>
@@ -58,13 +56,14 @@ export class AllUsers extends React.Component {
 
 const mapState = state => {
   return {
-    users: state.users
+    users: state.users,
+    user: state.user
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    fetchUsers: () => dispatch(fetchUsers()),
+    fetchUsers: id => dispatch(fetchUsers(id)),
     removeUser: id => dispatch(removeUser(id))
   }
 }

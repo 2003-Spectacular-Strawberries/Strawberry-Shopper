@@ -12,10 +12,10 @@ export const removeUser = id => {
   return {type: REMOVE_USER, id}
 }
 
-export const fetchUsers = () => {
+export const fetchUsers = id => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/users')
+      const {data} = await axios.get(`/api/users/`)
       return dispatch(setUsers(data))
     } catch (err) {
       console.log(err)

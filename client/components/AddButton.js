@@ -6,7 +6,7 @@ class AddButton extends React.Component {
   constructor() {
     super()
     this.state = {
-      quantity: 0
+      quantity: 1
     }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
@@ -20,17 +20,11 @@ class AddButton extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    try {
-      const quantity = this.state.quantity
-      const {productId} = this.props
-    } catch (error) {
-      console.log(error)
-    }
+    console.log('ADD BUTTON handleSubmit props >>>> ', this.props)
+    this.props.addQuantity(this.props.productId, 3, this.state.quantity)
   }
 
   render() {
-    console.log('BUTTON')
-
     return (
       <form onSubmit={this.handleSubmit}>
         <input
@@ -48,7 +42,8 @@ class AddButton extends React.Component {
 }
 
 const mapState = state => ({
-  addToCart: state.addToCart
+  addToCart: state.addToCart,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({

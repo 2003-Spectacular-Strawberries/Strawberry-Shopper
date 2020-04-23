@@ -46,39 +46,53 @@ form div {
 
 /* All Products */
 
-.all-products {
+.all-products-container,
+.all-users-container {
   padding: 0 3rem;
 }
 
-.all-products-container {
-  display: flex;
-  justify-content: space-between;
+.all-products,
+.all-users {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.single-product {
+.single-product,
+.single-user {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 3rem;
 }
 
+.single-product-name {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.single-product-name:hover {
+  color: crimson;
+}
+
+/* BUTTON */
 .btn {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
   border-radius: 5px;
   text-transform: uppercase;
+  font-size: 0.8rem;
   background: crimson;
   color: #fff;
   border: 1px solid crimson;
   transition: 0.2s all ease;
+  cursor: pointer;
 }
 
 .btn:hover {
   background: #fff;
-
   color: crimson;
 }
 
 /* All Users */
-
 .user-image {
   width: 100px;
   height: 100px;
@@ -88,6 +102,7 @@ form div {
   width: 100px;
   height: 100px;
 }
+
 
 /* Admin Page */
 .adminPage-container {
@@ -140,4 +155,30 @@ form div {
 
 .newProductCreateButton-container {
   width: 500px;
+
+/* AUTH FORM */
+
+.auth-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* CART */
+
+.cart-container {
+  padding: 1rem 3rem;
+
+  display: flex;
+  justify-content: center;
+}
+
+.cart {
+
 }
