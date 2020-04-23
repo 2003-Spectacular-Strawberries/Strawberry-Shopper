@@ -27,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', isAdminMiddleware, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const product = await Product.create({
       name: req.body.name,

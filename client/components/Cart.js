@@ -5,8 +5,8 @@ import {fetchOrder, deleteProduct} from '../store/order'
 
 class Cart extends React.Component {
   componentDidMount() {
-    const {id} = this.props.user
-    this.props.fetchOrder(id)
+    //alter backend API to get current user from session
+    this.props.fetchOrder()
   }
 
   render() {
