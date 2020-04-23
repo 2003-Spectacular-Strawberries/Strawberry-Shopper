@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchUsers, removeUser} from '../store/allUsers'
+import {fetchUsers, removeUser, deleteUser} from '../store/allUsers'
 import axios from 'axios'
 // import {User} from '../../server/db/models'
 
@@ -30,6 +30,16 @@ export class AllUsers extends React.Component {
     }
   }
 
+  async handleSubmit(id) {
+    if (this.props.deleteUser) {
+      try {
+        await this.props.deleteUser(id)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }
+
   render() {
     return (
       <div className="all-users-container">
@@ -37,11 +47,20 @@ export class AllUsers extends React.Component {
           {this.props.users && this.props.users.length > 0 ? (
             this.props.users.map(user => {
               return (
-                <div key={user.id}>
-                  <Link to={`/singleuser/${user.id}`} className="single-user">
+                <div key={user.id} className="single-user">
+                  <Link
+                    to={`/singleuser/${user.id}`}
+                    className="single-user-link"
+                  >
                     <img src={user.imageUrl} alt="" className="user-image" />
                     <h2>{user.email}</h2>
                   </Link>
+                  <button
+                    type="submit"
+                    onClick={() => this.handleSubmit(user.id)}
+                  >
+                    Delete User
+                  </button>
                 </div>
               )
             })
@@ -64,7 +83,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     fetchUsers: id => dispatch(fetchUsers(id)),
-    removeUser: id => dispatch(removeUser(id))
+    removeUser: id => dispatch(removeUser(id)),
+    deleteUser: id => dispatch(deleteUser(id))
   }
 }
 

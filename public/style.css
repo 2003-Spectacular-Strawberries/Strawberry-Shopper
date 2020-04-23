@@ -54,6 +54,7 @@ form div {
 .all-products,
 .all-users {
   display: grid;
+  align-items: center;
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -62,7 +63,20 @@ form div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 3rem;
+}
+
+.single-user-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-user img {
+  width: 100px;
+  height: 100px;
 }
 
 .single-product-name {
@@ -174,10 +188,15 @@ form div {
 
 .cart-container {
   padding: 1rem 3rem;
-
   display: flex;
   justify-content: center;
 }
 
 .cart {
+}
+
+.account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
