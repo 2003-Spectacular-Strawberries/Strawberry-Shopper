@@ -6,11 +6,17 @@ const initialState = {
 
 // Action Types
 const SET_ORDER = 'SET_ORDER'
+const DELETED_PRODUCT = 'DELETE_PRODUCT'
 
 // Action Creators
 export const setOrder = order => ({
   type: SET_ORDER,
   order
+})
+
+export const deletedProduct = productId => ({
+  type: DELETED_PRODUCT,
+  productId
 })
 
 // Thunk Creators
@@ -25,12 +31,37 @@ export const fetchOrder = userId => {
   }
 }
 
+export const deleteProduct = (orderId, productId) => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/orderItems/${orderId}/product/${productId}`)
+
+      // Must set order again to reflect the new items back on state
+
+      dispatch(deletedProduct(productId))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 // Reducer
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ORDER: {
       return {...state, order: action.order}
     }
+    case DELETED_PRODUCT:
+      const orderProducts = state.order.products
+      const filteredOrder = orderProducts.filter(
+        product => product.id !== action.productId
+      )
+
+      state.order.products = filteredOrder
+
+      return {
+        ...state
+      }
     default:
       return state
   }

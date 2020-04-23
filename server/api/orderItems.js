@@ -35,7 +35,7 @@ router.put('/:orderId/product/:productId', async (req, res, next) => {
   }
 })
 
-router.delete('/:orderId/products/:productId', async (req, res, next) => {
+router.delete('/:orderId/product/:productId', async (req, res, next) => {
   try {
     const orderItem = await OrderItems.findOne({
       where: {
