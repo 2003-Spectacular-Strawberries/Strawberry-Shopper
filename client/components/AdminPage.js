@@ -23,8 +23,9 @@ class AdminPage extends React.Component {
 
   render() {
     return (
-      <div className="adminPage">
+      <div className="adminPage-container">
         <h1
+          className="adminHeaders"
           onClick={() => {
             this.setState({section: 'products'})
           }}
@@ -32,6 +33,7 @@ class AdminPage extends React.Component {
           Products
         </h1>
         <h1
+          className="adminHeaders"
           onClick={() => {
             this.setState({section: 'newproduct'})
           }}
@@ -39,6 +41,7 @@ class AdminPage extends React.Component {
           NewProducts
         </h1>
         <h1
+          className="adminHeaders"
           onClick={() => {
             this.setState({section: 'users'})
           }}
@@ -62,6 +65,7 @@ class AdminPage extends React.Component {
                         className="product-image"
                       />
                     </Link>
+                    <button className="btn">Delete</button>
                     <p>Price ${(product.price / 100).toFixed(2)}</p>
                   </div>
                 )

@@ -88,3 +88,41 @@ form div {
   width: 100px;
   height: 100px;
 }
+
+/* Admin Page */
+.adminPage-container {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+}
+
+.adminHeaders {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: center; */
+}
+
+.newProductForm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: pink;
+  width: 40%;
+  margin: 0 auto;
+}
+
+.newProducFormInput {
+  width: 500px;
+  height: 30px;
+}
+
+.newProductCreateButton {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 50px;
+  height: 30px;
+  /* margin: 0 auto */
+}
