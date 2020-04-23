@@ -1,7 +1,7 @@
 const {User} = require('../db/models')
 
-const isUserMiddleware = (req, res, next) => {
-  const currentUser = User.findOne({
+const isUserMiddleware = async (req, res, next) => {
+  const currentUser = await User.findOne({
     where: {id: req.body.userId}
   })
   if (currentUser && currentUser.id) {

@@ -42,7 +42,8 @@ class AddButton extends React.Component {
 }
 
 const mapState = state => ({
-  addToCart: state.addToCart
+  addToCart: state.addToCart,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({

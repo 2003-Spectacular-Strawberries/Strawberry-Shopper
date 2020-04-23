@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {Product} = require('../db/models')
-const {isAdminMiddleware} = require('../auth/isAdmin')
-const {isUserMiddleware} = require('../auth/isUser')
+const isAdminMiddleware = require('../auth/isAdmin')
+const isUserMiddleware = require('../auth/isUser')
 
 module.exports = router
 
@@ -27,16 +27,16 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isAdminMiddleware, async (req, res, next) => {
   try {
-    await Product.create({
-      email: req.body.email,
-      password: req.body.password,
-      // salt: {},
+    const product = await Product.create({
+      name: req.body.name,
+      price: req.body.price,
       imageUrl: req.body.imageUrl,
-      googleId: req.body.googleId
+      stock: req.body.stock,
+      description: req.body.description
     })
-    res.status(201).redirect('/login')
+    res.status(201).json(product)
   } catch (err) {
     next(err)
   }
