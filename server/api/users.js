@@ -5,6 +5,7 @@ module.exports = router
 
 router.get('/', isAdminMiddleware, async (req, res, next) => {
   try {
+    console.log('REQ.USER', req.user)
     const users = await User.findAll()
     res.json(users)
   } catch (err) {
