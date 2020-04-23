@@ -6,7 +6,7 @@ import {fetchOrder, deleteProduct} from '../store/order'
 class Cart extends React.Component {
   componentDidMount() {
     //alter backend API to get current user from session
-    this.props.fetchOrder()
+    this.props.fetchOrder(3)
   }
 
   render() {
@@ -33,7 +33,7 @@ class Cart extends React.Component {
                   <button
                     id="delete"
                     type="submit"
-                    onClick={() => this.props.deleteProduct(1, product.id)}
+                    onClick={() => this.props.deleteProduct(2, product.id)}
                     className="btn"
                   >
                     Remove
