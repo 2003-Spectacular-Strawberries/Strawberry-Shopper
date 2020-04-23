@@ -14,12 +14,10 @@ export class AllUsers extends React.Component {
   }
 
   async componentDidMount() {
-    if (this.props.fetchUsers) {
-      try {
-        await this.props.fetchUsers()
-      } catch (err) {
-        console.log(err)
-      }
+    try {
+      await this.props.fetchUsers()
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -65,7 +63,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    fetchUsers: () => dispatch(fetchUsers()),
+    fetchUsers: id => dispatch(fetchUsers(id)),
     removeUser: id => dispatch(removeUser(id))
   }
 }

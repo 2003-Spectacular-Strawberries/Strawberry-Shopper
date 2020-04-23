@@ -3,7 +3,7 @@ const {User} = require('../db/models')
 const isAdminMiddleware = async (req, res, next) => {
   try {
     const currentUser = await User.findOne({
-      where: {id: req.body.userId}
+      where: {id: req.user.dataValues.id}
     })
     if (currentUser && currentUser.isAdmin) {
       next()
