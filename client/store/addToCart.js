@@ -16,9 +16,9 @@ const setQuantity = quantity => ({
 export const addQuantity = (productId, userId, quantity) => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(`/api/carts/${userId}`)
-      const cartId = data.id
-      await axios.put(`/api/${cartId}/${productId}`, quantity)
+      await axios.put(`/api/orders/user/${userId}/product/${productId}`, {
+        quantity
+      })
       dispatch(setQuantity(quantity))
     } catch (error) {
       console.log(error)
@@ -30,7 +30,6 @@ const addToCartReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_QUANTITY:
       return {...state, quantity: action.quantity}
-
     default:
       return state
   }
