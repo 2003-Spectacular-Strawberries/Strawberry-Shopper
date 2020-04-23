@@ -20,7 +20,7 @@ class AddButton extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    console.log('ADD BUTTON handleSubmit props >>>> ', this.props)
+
     this.props.addQuantity(this.props.productId, 3, this.state.quantity)
   }
 
