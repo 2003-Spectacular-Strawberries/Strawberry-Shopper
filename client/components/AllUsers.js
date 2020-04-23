@@ -34,13 +34,13 @@ export class AllUsers extends React.Component {
 
   render() {
     return (
-      <div className="all-users">
-        <div className="all-users-container">
+      <div className="all-users-container">
+        <div className="all-users">
           {this.props.users && this.props.users.length > 0 ? (
             this.props.users.map(user => {
               return (
-                <div className="single-user" key={user.id}>
-                  <Link to={`/singleuser/${user.id}`}>
+                <div key={user.id}>
+                  <Link to={`/singleuser/${user.id}`} className="single-user">
                     <img src={user.imageUrl} alt="" className="user-image" />
                     <h2>{user.email}</h2>
                   </Link>
