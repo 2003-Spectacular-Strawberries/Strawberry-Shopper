@@ -35,9 +35,6 @@ export const deleteProduct = (orderId, productId) => {
   return async dispatch => {
     try {
       await axios.delete(`/api/orderItems/${orderId}/product/${productId}`)
-
-      // Must set order again to reflect the new items back on state
-
       dispatch(deletedProduct(productId))
     } catch (error) {
       console.log(error)
@@ -53,6 +50,7 @@ const orderReducer = (state = initialState, action) => {
     }
     case DELETED_PRODUCT:
       const orderProducts = state.order.products
+
       const filteredOrder = orderProducts.filter(
         product => product.id !== action.productId
       )
