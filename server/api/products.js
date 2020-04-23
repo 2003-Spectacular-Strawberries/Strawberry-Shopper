@@ -32,6 +32,7 @@ router.post('/', async (req, res, next) => {
     const product = await Product.create({
       name: req.body.name,
       price: req.body.price,
+
       imageUrl: req.body.imageUrl,
       stock: req.body.stock,
       description: req.body.description

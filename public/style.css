@@ -103,6 +103,59 @@ form div {
   height: 100px;
 }
 
+
+/* Admin Page */
+.adminPage-container {
+  /* display: flex;
+  /* flex-direction: column; */
+  /* align-items: center;
+  justify-content: center; */
+}
+
+.adminHeadersContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.adminHeaders {
+  /* display: flex;
+  flex-direction: row;
+  justify-content: center; */
+}
+
+.newProductForm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: pink;
+  width: 40%;
+  margin: 0 auto 100px;
+}
+
+.newProducFormInput {
+  width: 500px;
+  height: 30px;
+}
+
+.newProducFormInputHeader {
+  justify-items: flex-start;
+  align-self: flex-start;
+  margin: 30px 30px;
+}
+
+.newProductCreateButton {
+  justify-items: flex-start;
+  align-self: flex-start;
+  width: 50px;
+  height: 30px;
+  margin: 30px 0;
+}
+
+.newProductCreateButton-container {
+  width: 500px;
+
 /* AUTH FORM */
 
 .auth-container {
@@ -127,4 +180,5 @@ form div {
 }
 
 .cart {
+
 }
