@@ -103,7 +103,6 @@ form div {
   height: 100px;
 }
 
-
 /* Admin Page */
 .adminPage-container {
   /* display: flex;
@@ -155,6 +154,7 @@ form div {
 
 .newProductCreateButton-container {
   width: 500px;
+}
 
 /* AUTH FORM */
 
@@ -180,5 +180,4 @@ form div {
 }
 
 .cart {
-
 }
