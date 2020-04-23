@@ -5,8 +5,8 @@ import {fetchOrder, deleteProduct} from '../store/order'
 
 class Cart extends React.Component {
   componentDidMount() {
-    // need userId for fetchOrder
-    this.props.fetchOrder(3)
+    const {id} = this.props.user
+    this.props.fetchOrder(id)
   }
 
   render() {
@@ -49,7 +49,8 @@ class Cart extends React.Component {
 }
 
 const mapState = state => ({
-  order: state.order
+  order: state.order,
+  user: state.user
 })
 
 const mapDispatch = dispatch => ({
