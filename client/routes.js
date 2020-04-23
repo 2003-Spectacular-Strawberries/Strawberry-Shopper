@@ -10,6 +10,7 @@ import {
   AllProducts,
   SingleProduct,
   SingleUser,
+  NewProduct,
   AllUsers,
   AdminPage
 } from './components'
@@ -24,7 +25,7 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, isAdmin} = this.props
     console.log(this.props)
     return (
       <Switch>
@@ -33,22 +34,41 @@ class Routes extends Component {
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/allproducts" component={AllProducts} />
         <Route exact path="/singleproduct/:id" component={SingleProduct} />
-        <Route exact path="/allusers" component={AllUsers} />
-        <Route exact path="/singleuser" component={SingleUser} />
-        <Route exact path="/singleuser/:id" component={SingleUser} />
         <Route exact path="/cart" component={Cart} />
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
-            <Route exact path="/allproducts" component={AllProducts} />
-            <Route exact path="/singleproduct/:id" component={SingleProduct} />
-            <Route exact path="/singleuser" component={SingleUser} />
-            <Route exact path="/singleuser/:id" component={SingleUser} />
-            <Route exact path="/cart" component={Cart} />
-            <Route exact path="/admin" component={AdminPage} />
-          </Switch>
-        )}
+        {isLoggedIn &&
+          !isAdmin && (
+            <Switch>
+              {/* Routes placed here are only available to regular users after logging in */}
+              <Route path="/home" component={UserHome} />
+              <Route exact path="/allproducts" component={AllProducts} />
+              <Route
+                exact
+                path="/singleproduct/:id"
+                component={SingleProduct}
+              />
+              <Route exact path="/singleuser" component={SingleUser} />
+              <Route exact path="/cart" component={Cart} />
+            </Switch>
+          )}
+        {isLoggedIn &&
+          isAdmin && (
+            <Switch>
+              {/* Routes placed here are only available to admins after logging in */}
+              <Route path="/home" component={UserHome} />
+              <Route exact path="/allusers" component={AllUsers} />
+              <Route exact path="/allproducts" component={AllProducts} />
+              <Route
+                exact
+                path="/singleproduct/:id"
+                component={SingleProduct}
+              />
+              <Route exact path="/singleuser" component={SingleUser} />
+              <Route exact path="/singleuser/:id" component={SingleUser} />
+              <Route exact path="/newproduct" component={NewProduct} />
+              <Route exact path="/cart" component={Cart} />
+              <Route exact path="/admin" component={AdminPage} />
+            </Switch>
+          )}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
@@ -64,6 +84,7 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin,
     user: state.user
   }
 }

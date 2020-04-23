@@ -55,13 +55,16 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isAdminMiddleware, async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
         id: req.params.id
       }
     })
+    if (user.isAdmin) {
+      return res.status(403).redirect('/allusers')
+    }
     await user.destroy()
     res.status(200).send('User deleted.')
   } catch (err) {

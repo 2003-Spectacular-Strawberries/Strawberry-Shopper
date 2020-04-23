@@ -4,23 +4,40 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = ({handleClick, isLoggedIn, isAdmin, user}) => (
   <div>
     <h1 className="navbar-header">Strawberry Shopper</h1>
 
     <nav className="navbar">
-      {isLoggedIn ? (
+      {isLoggedIn && isAdmin ? (
         <div className="navbar-logged">
           {/* The navbar will show these links after you log in */}
           <div className="navbar-left">
             <Link to="/home">Home</Link>
             <Link to="/allproducts">All Products</Link>
+            <Link to="/newproduct">New Product</Link>
             <Link to="/allusers">All Users</Link>
-            <Link to="/cart">Cart</Link>
           </div>
 
           <div className="navbar-right">
-            <Link to="/cart">Cart</Link>
+            <Link to="/singleuser">Account</Link>
+            <Link to="/cart">{user.firstName}'s Cart</Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        </div>
+      ) : isLoggedIn && !isAdmin ? (
+        <div className="navbar-logged">
+          {/* The navbar will show these links after you log in */}
+          <div className="navbar-left">
+            <Link to="/home">Home</Link>
+            <Link to="/allproducts">All Products</Link>
+          </div>
+
+          <div className="navbar-right">
+            <Link to="/singleuser">Account</Link>
+            <Link to="/cart">{user.firstName}'s Cart</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
@@ -32,11 +49,10 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <div className="navbar-left">
             <Link to="/home">Home</Link>
             <Link to="/allproducts">All Products</Link>
-            <Link to="/allusers">All Users</Link>
-            <Link to="/cart">Cart</Link>
           </div>
 
           <div className="navbar-right">
+            <Link to="/cart">Guest Cart</Link>
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
@@ -53,6 +69,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.isAdmin,
     user: state.user
   }
 }
