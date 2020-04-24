@@ -14,8 +14,13 @@ const setQuantity = quantity => ({
 // THUNK
 
 export const addQuantity = (productId, userId, quantity) => {
+  console.log('STATE QUANTITY')
+
   return async dispatch => {
     try {
+      // Get current quantity of selected item
+      // Add that quantity to the incoming quantity
+
       await axios.put(`/api/orders/user/${userId}/product/${productId}`, {
         quantity
       })
