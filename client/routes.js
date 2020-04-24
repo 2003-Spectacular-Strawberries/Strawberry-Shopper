@@ -12,7 +12,8 @@ import {
   SingleUser,
   NewProduct,
   AllUsers,
-  AdminPage
+  AdminPage,
+  AdminSingleProduct
 } from './components'
 import {me} from './store'
 
@@ -26,7 +27,6 @@ class Routes extends Component {
 
   render() {
     const {isLoggedIn, isAdmin} = this.props
-    console.log(this.props)
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -59,8 +59,8 @@ class Routes extends Component {
               <Route exact path="/allproducts" component={AllProducts} />
               <Route
                 exact
-                path="/singleproduct/:id"
-                component={SingleProduct}
+                path="/admin-singleproduct/:id"
+                component={AdminSingleProduct}
               />
               <Route exact path="/singleuser" component={SingleUser} />
               <Route exact path="/singleuser/:id" component={SingleUser} />

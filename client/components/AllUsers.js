@@ -52,6 +52,9 @@ export class AllUsers extends React.Component {
                     to={`/singleuser/${user.id}`}
                     className="single-user-link"
                   >
+                    <h2>
+                      {user.firstName} {user.lastName}
+                    </h2>
                     <img src={user.imageUrl} alt="" className="user-image" />
                     <h2>{user.email}</h2>
                   </Link>
