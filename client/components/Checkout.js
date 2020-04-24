@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchOrder, deleteProduct} from '../store/order'
 
-class Cart extends React.Component {
+class Checkout extends React.Component {
   componentDidMount() {
     if (this.props.user.id) {
       this.props.fetchOrder(this.props.user.id)
@@ -71,4 +71,4 @@ const mapDispatch = dispatch => ({
     dispatch(deleteProduct(orderId, productId))
 })
 
-export default connect(mapState, mapDispatch)(Cart)
+export default connect(mapState, mapDispatch)(Checkout)
