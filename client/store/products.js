@@ -8,6 +8,7 @@ const initialState = {
 const SET_PRODUCTS = 'SET_PRODUCTS'
 const ADD_PRODUCTS = 'ADD_PRODUCTS'
 const DELETE_PRODUCT = 'DELETE_PRODUCT'
+const EDIT_PRODUCT = 'EDIT_PRODUCT'
 
 // Actions Creators
 export const setProducts = products => {
@@ -27,6 +28,13 @@ export const addProduct = product => {
 export const removeProduct = productId => {
   return {
     type: DELETE_PRODUCT,
+    productId
+  }
+}
+
+export const updateProduct = productId => {
+  return {
+    type: EDIT_PRODUCT,
     productId
   }
 }
@@ -57,6 +65,13 @@ export const deleteProduct = id => {
   }
 }
 
+export const editProduct = id => {
+  return async dispatch => {
+    await axios.update('/api/products/' + id)
+    dispatch(updateProduct(id))
+  }
+}
+
 // Products Reducer
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -70,6 +85,11 @@ const productsReducer = (state = initialState, action) => {
         products: state.products.filter(product => {
           return product.id !== action.productId
         })
+      }
+    case EDIT_PRODUCT:
+      return {
+        ...state,
+        products: action.products
       }
     default:
       return state

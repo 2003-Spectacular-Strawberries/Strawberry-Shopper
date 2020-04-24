@@ -30,7 +30,7 @@ class AdminPage extends React.Component {
               this.setState({section: 'products'})
             }}
           >
-            Products
+            Edit Products
           </h1>
           <h1
             className="adminHeaders"
@@ -39,14 +39,6 @@ class AdminPage extends React.Component {
             }}
           >
             New Product Form
-          </h1>
-          <h1
-            className="adminHeaders"
-            onClick={() => {
-              this.setState({section: 'users'})
-            }}
-          >
-            Users
           </h1>
         </div>
 
@@ -72,6 +64,16 @@ class AdminPage extends React.Component {
                       onClick={event => {
                         event.preventDefault()
                         this.props.deleteProduct(product.id)
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn"
+                      type="submit"
+                      onClick={event => {
+                        event.preventDefault()
+                        this.props.editProduct(product.id)
                       }}
                     >
                       Delete

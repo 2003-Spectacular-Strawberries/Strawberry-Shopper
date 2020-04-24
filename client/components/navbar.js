@@ -15,8 +15,8 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin, user}) => (
           <div className="navbar-left">
             <Link to="/home">Home</Link>
             <Link to="/allproducts">All Products</Link>
-            <Link to="/newproduct">New Product</Link>
             <Link to="/allusers">All Users</Link>
+            <Link to="/manage-products">Manage Products </Link>
           </div>
 
           <div className="navbar-right">
