@@ -14,7 +14,7 @@ class SingleProduct extends React.Component {
 
   render() {
     const {product} = this.props.product
-    console.log('THIS IS PROPS', this.props)
+
     // Have to ensure that ID of current user and current product is passed down to addbutton component
     return (
       <div className="single-product">

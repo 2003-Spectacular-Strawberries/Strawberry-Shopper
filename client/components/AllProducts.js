@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
+import AddButton from './AddButton'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -32,6 +33,8 @@ class AllProducts extends React.Component {
                 </Link>
                 <p>Price ${(product.price / 100).toFixed(2)}</p>
                 <button className="btn">Add</button>
+
+                {/* <AddButton productId={product.id} /> */}
               </div>
             )
           })}
