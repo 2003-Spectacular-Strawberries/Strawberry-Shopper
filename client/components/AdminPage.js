@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchProducts, deleteProduct} from '../store/products'
+import {fetchProducts, deleteProduct, editProduct} from '../store/products'
 import AllUsers from './AllUsers'
 import NewProduct from './NewProduct'
 
@@ -43,15 +43,15 @@ class AdminPage extends React.Component {
         </div>
 
         {this.state.section === 'products' ? (
-          <div className="all-products">
-            <div className="all-products-container">
+          <div className="all-products-container">
+            <div className="all-products">
               {this.props.products.products.map(product => {
                 return (
                   <div className="single-product" key={product.id}>
-                    <Link to={`/singleproduct/${product.id}`}>
+                    <Link to={`/admin-singleproduct/${product.id}`}>
                       {product.name}
                     </Link>
-                    <Link to="/singleproduct/id">
+                    <Link to={`/admin-singleproduct/${product.id}`}>
                       <img
                         src={product.imageUrl}
                         alt=""
@@ -66,17 +66,17 @@ class AdminPage extends React.Component {
                         this.props.deleteProduct(product.id)
                       }}
                     >
-                      Edit
+                      Delete
                     </button>
                     <button
                       className="btn"
                       type="submit"
-                      onClick={event => {
-                        event.preventDefault()
-                        this.props.editProduct(product.id)
-                      }}
+                      // onClick={event => {
+                      //   event.preventDefault()
+                      //   this.props.editProduct(product.id)
+                      // }}
                     >
-                      Delete
+                      Edit
                     </button>
                     <p>Price ${(product.price / 100).toFixed(2)}</p>
                   </div>
@@ -101,7 +101,8 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   fetchProducts: () => dispatch(fetchProducts()),
-  deleteProduct: id => dispatch(deleteProduct(id))
+  deleteProduct: id => dispatch(deleteProduct(id)),
+  editProduct: id => dispatch(editProduct(id))
 })
 
 export default connect(mapState, mapDispatch)(AdminPage)

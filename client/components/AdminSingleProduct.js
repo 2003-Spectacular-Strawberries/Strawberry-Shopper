@@ -6,7 +6,7 @@ import {fetchProduct} from '../store/singleProduct'
 // import {Navbar} from './components'
 // import Routes from './routes'
 
-class SingleProduct extends React.Component {
+class AdminSingleProduct extends React.Component {
   componentDidMount() {
     const productId = this.props.match.params.id
     this.props.fetchProduct(productId)
@@ -14,6 +14,7 @@ class SingleProduct extends React.Component {
 
   render() {
     const {product} = this.props.product
+    console.log('!!!!!!!!!!!!!!!!!!', this.props)
     // Have to ensure that ID of current user and current product is passed down to addbutton component
     return (
       <div className="single-product">
@@ -23,6 +24,20 @@ class SingleProduct extends React.Component {
         <p>{product.description}</p>
 
         <AddButton productId={product.id} />
+
+        {this.props.user.isAdmin && (
+          <button
+            className="btn"
+            type="submit"
+            onClick={event => {
+              event.preventDefault()
+              console.log('we clicked edit')
+              // this.props.editProduct(product.id)
+            }}
+          >
+            Edit
+          </button>
+        )}
       </div>
     )
   }
@@ -37,4 +52,4 @@ const mapDispatch = dispatch => ({
   fetchProduct: productId => dispatch(fetchProduct(productId))
 })
 
-export default connect(mapState, mapDispatch)(SingleProduct)
+export default connect(mapState, mapDispatch)(AdminSingleProduct)
