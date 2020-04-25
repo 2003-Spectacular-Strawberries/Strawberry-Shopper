@@ -116,7 +116,7 @@ async function seed() {
       imageUrl: 'https://i.imgur.com/obInsr9.jpg'
     }),
     Product.create({
-      name: 'Cocolate-Covered Strawberries',
+      name: 'Chocolate-Covered Strawberries',
       price: 1199,
       stock: 1000,
       description:
