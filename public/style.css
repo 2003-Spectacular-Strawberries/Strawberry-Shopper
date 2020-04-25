@@ -76,7 +76,7 @@ form div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+
   padding: 3rem;
 }
 
@@ -245,8 +245,29 @@ form div {
   justify-content: center;
 }
 
-.cart {
+.cart-item {
+  padding: 1.5rem 3rem 1.5rem 0;
+  border-bottom: 1px solid #999;
 }
+
+.cart:last-child {
+  border: 0;
+}
+
+.cart-checkout {
+  padding: 1.5rem 3rem 1.5rem 0;
+}
+
+.quantity-input {
+  width: 20px;
+  padding: 0.5rem;
+}
+
+.quantity-input:focus {
+  outline: none;
+}
+
+/* ACCOUNT */
 
 .account-container {
   display: flex;
