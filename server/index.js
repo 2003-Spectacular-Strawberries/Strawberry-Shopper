@@ -8,6 +8,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
+console.log('PORT', PORT)
 const app = express()
 const socketio = require('socket.io')
 module.exports = app
@@ -108,10 +109,15 @@ const startListening = () => {
 const syncDb = () => db.sync()
 
 async function bootApp() {
+  console.log('booting app')
   await sessionStore.sync()
+  console.log('awaited once')
   await syncDb()
+  console.log('awaited twice')
   await createApp()
+  console.log('awaited 3x')
   await startListening()
+  console.log('awaited 4x')
 }
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
