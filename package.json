@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "This is your online shopping website for all your strawberry needs!!",
   "engines": {
-    "node": ">= 7.0.0"
+    "node": "~12.11.1"
   },
   "main": "index.js",
   "scripts": {
