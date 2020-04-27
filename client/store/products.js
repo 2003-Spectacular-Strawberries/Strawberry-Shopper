@@ -40,11 +40,20 @@ export const updateProduct = productId => {
 }
 
 // Thunk Creators
-export const fetchProducts = () => {
+export const fetchProducts = category => {
+  console.log('THUNK RAN WITH CATEGORY', category)
   return async dispatch => {
     try {
-      const res = await axios.get('/api/products')
-      dispatch(setProducts(res.data))
+      if (!category || category.category === 'all-products') {
+        const res = await axios.get('/api/products')
+        console.log('AXIOS GET RESULT', res.data)
+        dispatch(setProducts(res.data))
+      } else {
+        const res = await axios.get(
+          `/api/products/category/${category.category}`
+        )
+        dispatch(setProducts(res.data))
+      }
     } catch (error) {
       console.log(error)
     }
