@@ -4,6 +4,7 @@ import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   Cart,
+  Checkout,
   Login,
   Signup,
   UserHome,
@@ -30,24 +31,18 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route path="/home" component={UserHome} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/allproducts" component={AllProducts} />
         <Route exact path="/singleproduct/:id" component={SingleProduct} />
+        <Route exact path="/checkout/:id" component={Checkout} />
         <Route exact path="/cart" component={Cart} />
         {isLoggedIn &&
           !isAdmin && (
             <Switch>
               {/* Routes placed here are only available to regular users after logging in */}
-              <Route path="/home" component={UserHome} />
-              <Route exact path="/allproducts" component={AllProducts} />
-              <Route
-                exact
-                path="/singleproduct/:id"
-                component={SingleProduct}
-              />
               <Route exact path="/singleuser" component={SingleUser} />
-              <Route exact path="/cart" component={Cart} />
             </Switch>
           )}
         {isLoggedIn &&
@@ -64,8 +59,8 @@ class Routes extends Component {
               />
               <Route exact path="/singleuser" component={SingleUser} />
               <Route exact path="/singleuser/:id" component={SingleUser} />
+              <Route exact path="/allusers" component={AllUsers} />
               <Route exact path="/newproduct" component={NewProduct} />
-              <Route exact path="/cart" component={Cart} />
               <Route exact path="/manage-products" component={AdminPage} />
             </Switch>
           )}

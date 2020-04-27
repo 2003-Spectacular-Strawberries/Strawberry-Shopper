@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
-
+import CategoryForm from './productsByCategory'
 import {addQuantity} from '../store/addToCart'
 
 class AllProducts extends React.Component {
@@ -13,7 +13,13 @@ class AllProducts extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchProducts()
+    this.props.fetchProducts(this.props.category)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.category !== prevProps.category) {
+      this.props.fetchProducts(this.props.category)
+    }
   }
 
   handleSubmit(event) {
@@ -27,9 +33,12 @@ class AllProducts extends React.Component {
 
   render() {
     const {products} = this.props.products
+    console.log('THIS IS PRODUCTS IN STORE', products)
+    console.log('THIS IS CATEGORY IN STORE', this.props.category)
 
     return (
       <div className="all-products-container">
+        <CategoryForm />
         <div className="all-products">
           {products.map(product => {
             return (
@@ -62,11 +71,12 @@ class AllProducts extends React.Component {
 
 const mapState = state => ({
   products: state.products,
-  user: state.user
+  user: state.user,
+  category: state.category
 })
 
 const mapDispatch = dispatch => ({
-  fetchProducts: () => dispatch(fetchProducts()),
+  fetchProducts: category => dispatch(fetchProducts(category)),
   addQuantity: (productId, userId, quantity) =>
     dispatch(addQuantity(productId, userId, quantity))
 })
