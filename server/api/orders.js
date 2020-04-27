@@ -1,5 +1,8 @@
 const router = require('express').Router()
 const {Order, OrderItems, Product} = require('../db/models')
+const isAdminMiddleware = require('../auth/isAdmin')
+const isUserMiddleware = require('../auth/isUser')
+const onlyUserMiddleware = require('../auth/onlyUser')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -42,8 +45,12 @@ router.put('/guest', async (req, res, next) => {
 })
 
 //get all products for a specific order, get the quantities of each product
-router.get('/:userId/cart', async (req, res, next) => {
+
+
+router.get('/:userId/cart', isUserMiddleware, async (req, res, next) => {
+
   try {
+    console.log('API ROUTE RUNNING', req.params.userId)
     const order = await Order.findOne({
       where: {userId: req.params.userId, isCart: true},
       include: {model: Product}
@@ -71,7 +78,8 @@ router.put('/:userId/cart/save', async (req, res, next) => {
   }
 })
 
-router.get('/:userId/history', async (req, res, next) => {
+
+router.get('/:userId/history', isUserMiddleware, async (req, res, next) => {
   try {
     const order = await Order.findAll({
       where: {userId: req.params.userId, isCart: false},

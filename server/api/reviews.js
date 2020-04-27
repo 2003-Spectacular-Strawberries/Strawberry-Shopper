@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const {Review} = require('../db/models')
+const isAdminMiddleware = require('../auth/isAdmin')
+const isUserMiddleware = require('../auth/isUser')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -24,7 +26,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', isUserMiddleware, async (req, res, next) => {
   try {
     const review = await Review.create({
       rating: req.body.rating,
@@ -38,7 +40,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isUserMiddleware, async (req, res, next) => {
   try {
     const review = await Review.findOne({
       where: {
@@ -52,7 +54,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isUserMiddleware, async (req, res, next) => {
   try {
     const review = await Review.findOne({
       where: {

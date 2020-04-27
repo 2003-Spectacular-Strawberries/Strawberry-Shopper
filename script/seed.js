@@ -112,6 +112,7 @@ async function seed() {
       name: 'Strawberry Cheesecake',
       price: 1999,
       stock: 100,
+      category: 'food',
       description: 'A delicious cheesecake. Not too sweet. Very rich.',
       imageUrl: 'https://i.imgur.com/obInsr9.jpg'
     }),
@@ -119,6 +120,7 @@ async function seed() {
       name: 'Chocolate-Covered Strawberries',
       price: 1199,
       stock: 1000,
+      category: 'food',
       description:
         'Milk, white, and dark chocolate-covered strawberries. Organic.',
       imageUrl: 'https://i.imgur.com/Bygn79R.jpg'
@@ -127,6 +129,7 @@ async function seed() {
       name: 'Strawberry Decal Sticker',
       price: 99,
       stock: 800,
+      category: 'arts_and_craft',
       description:
         'Show off your strawberry pride with this black and white strawberry decal sticker.',
       imageUrl: 'https://i.imgur.com/W3crUmI.jpg'
@@ -135,6 +138,7 @@ async function seed() {
       name: 'Pet Strawberry',
       price: 349,
       stock: 5,
+      category: 'pet_care',
       description: 'The perfect companion for children or adults.',
       imageUrl: 'https://i.imgur.com/8MckSnZ.jpg'
     }),
@@ -142,6 +146,7 @@ async function seed() {
       name: 'Strawberry Ice-Cream',
       price: 1199,
       stock: 320,
+      category: 'frozen_food',
       description:
         '1 Gallon of organic, gourmet ice-cream. Made in Burlington, Vermont.',
       imageUrl: 'https://i.imgur.com/RBBaPHa.jpg'
@@ -150,6 +155,7 @@ async function seed() {
       name: 'Strawberry Jam',
       price: 499,
       stock: 90,
+      category: 'food',
       description: 'Homemade strawberry jam. Very sweet.',
       imageUrl: 'https://i.imgur.com/7ZxNSGg.jpg'
     }),
@@ -157,6 +163,7 @@ async function seed() {
       name: 'Strawberry Margarita Mix',
       price: 599,
       stock: 10,
+      category: 'beverage',
       description: 'Perfect for a Sunday afternoon!',
       imageUrl: 'https://i.imgur.com/0JPIdYt.jpg'
     }),
@@ -164,6 +171,7 @@ async function seed() {
       name: 'Strawberry Throw Pillow',
       price: 899,
       stock: 100,
+      category: 'home_decorations',
       description: 'Ergonmically designed for maximum spinal support.',
       imageUrl: 'https://i.imgur.com/MjLOKcc.jpg'
     }),
@@ -171,6 +179,7 @@ async function seed() {
       name: 'Strawberry Plush Toy',
       price: 499,
       stock: 75,
+      category: 'home_decorations',
       description: 'Is he upside-down or right-side-up? You decide!',
       imageUrl: 'https://i.imgur.com/Cyue632.jpg'
     }),
@@ -178,6 +187,7 @@ async function seed() {
       name: 'Strawberry Bed Sheets',
       price: 1899,
       stock: 3,
+      category: 'home_decorations',
       description:
         '4-Piece Set (1 Fitted Sheet, 1 Top Sheet, and 2 Pillow Cases). 200 Thread Count, 100% Organic Cotton.',
       imageUrl: 'https://i.imgur.com/3DyPY76.jpg'
@@ -186,6 +196,7 @@ async function seed() {
       name: 'Strawberry Short Cake',
       price: 1299,
       stock: 100,
+      category: 'food',
       description: 'A delicious shortcake. Moderately sweet. Light.',
       imageUrl: 'https://i.imgur.com/tnLle5M.jpg'
     }),
@@ -193,6 +204,7 @@ async function seed() {
       name: 'Strawberry Board Shorts',
       price: 2499,
       stock: 10,
+      category: 'clothing',
       description: 'Hit the beach in style this summer!',
       imageUrl: 'https://i.imgur.com/YhmDR0c.jpg'
     }),
@@ -200,6 +212,7 @@ async function seed() {
       name: 'Strawberry Bikini',
       price: 2999,
       stock: 10,
+      category: 'clothing',
       description: 'Hit the beach in style this summer!',
       imageUrl: 'https://i.imgur.com/uJMphV8.jpg'
     }),
@@ -207,6 +220,7 @@ async function seed() {
       name: 'Strawberry Fruit Snacks',
       price: 699,
       stock: 100,
+      category: 'food',
       description: "Welch's brand strawberry fruit snacks. Pack of 10.",
       imageUrl: 'https://i.imgur.com/Ri34D1e.jpg'
     }),
@@ -214,6 +228,7 @@ async function seed() {
       name: 'Strawberry Soap',
       price: 199,
       stock: 23,
+      category: 'personal_care',
       description: 'Organic strawberry-infused bar soap. 1 bar.',
       imageUrl: 'https://i.imgur.com/u5pAKyh.jpg'
     }),
@@ -221,6 +236,7 @@ async function seed() {
       name: 'Strawberry Vodka',
       price: 2899,
       stock: 150,
+      category: 'beverage',
       description:
         'Absolut Strawberry Juice Vodka - 2 Liters. Must be 21 or over to order.',
       imageUrl: 'https://i.imgur.com/xkEv3ry.jpg'
