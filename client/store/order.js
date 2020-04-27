@@ -23,6 +23,7 @@ export const deletedProduct = productId => ({
 export const fetchOrder = userId => {
   return async dispatch => {
     try {
+      console.log('ORDER THUNK RAN')
       const {data} = await axios.get(`/api/orders/${userId}/cart`)
       dispatch(setOrder(data))
     } catch (error) {
