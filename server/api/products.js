@@ -27,14 +27,27 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
+router.get('/category/:category', async (req, res, next) => {
+  try {
+    const product = await Product.findAll({
+      where: {
+        category: req.params.category
+      }
+    })
+    res.json(product)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.post('/', isAdminMiddleware, async (req, res, next) => {
   try {
     const product = await Product.create({
       name: req.body.name,
       price: req.body.price,
-
       imageUrl: req.body.imageUrl,
       stock: req.body.stock,
+      category: req.body.category,
       description: req.body.description
     })
     res.status(201).json(product)
@@ -43,7 +56,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isAdminMiddleware, async (req, res, next) => {
   try {
     const product = await Product.findOne({
       where: {
@@ -57,7 +70,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isAdminMiddleware, async (req, res, next) => {
   try {
     const product = await Product.findOne({
       where: {

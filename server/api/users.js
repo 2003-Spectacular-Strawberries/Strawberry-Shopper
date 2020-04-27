@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
 const isAdminMiddleware = require('../auth/isAdmin')
+const isUserMiddleware = require('../auth/isUser')
 module.exports = router
 
 router.get('/', isAdminMiddleware, async (req, res, next) => {
@@ -13,7 +14,7 @@ router.get('/', isAdminMiddleware, async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', isUserMiddleware, async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
@@ -41,7 +42,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isUserMiddleware, async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
@@ -55,7 +56,7 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', isAdminMiddleware, async (req, res, next) => {
+router.delete('/:id', isUserMiddleware, async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {

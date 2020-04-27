@@ -23,16 +23,20 @@ const Product = db.define('product', {
       min: 0
     }
   },
+  category: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  description: {
+    type: Sequelize.TEXT,
+    allowNull: true
+  },
   imageUrl: {
     type: Sequelize.STRING,
     default: 'https://i.imgur.com/POLRlNo.jpg',
     validate: {
       isUrl: true
     }
-  },
-  description: {
-    type: Sequelize.TEXT,
-    allowNull: true
   }
 })
 
