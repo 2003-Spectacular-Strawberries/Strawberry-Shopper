@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
-import AddButton from './AddButton'
 import CategoryForm from './productsByCategory'
 import {addQuantity} from '../store/addToCart'
 

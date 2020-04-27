@@ -46,8 +46,8 @@ router.put('/guest', async (req, res, next) => {
 
 //get all products for a specific order, get the quantities of each product
 router.get('/:userId/cart', isUserMiddleware, async (req, res, next) => {
-  console.log('order get route')
   try {
+    console.log('API ROUTE RUNNING', req.params.userId)
     const order = await Order.findOne({
       where: {userId: req.params.userId, isCart: true},
       include: {model: Product}
@@ -75,7 +75,7 @@ router.put('/:userId/cart/save', async (req, res, next) => {
   }
 })
 
-router.get('/:userId/history', async (req, res, next) => {
+router.get('/:userId/history', isUserMiddleware, async (req, res, next) => {
   try {
     const order = await Order.findAll({
       where: {userId: req.params.userId, isCart: false},
@@ -92,31 +92,27 @@ orderId for their active order (where isCart: true),
 then queries the OrderItems table to update the specified product
 for the relevant order to have the quantity send by the front-end thunk
 */
-router.put(
-  '/user/:userId/product/:productId',
-  onlyUserMiddleware,
-  async (req, res, next) => {
-    try {
-      const order = await Order.findOrCreate({
-        where: {userId: req.params.userId, isCart: true},
-        include: {model: Product}
-      })
+router.put('/user/:userId/product/:productId', async (req, res, next) => {
+  try {
+    const order = await Order.findOrCreate({
+      where: {userId: req.params.userId, isCart: true},
+      include: {model: Product}
+    })
 
-      const orderItem = await OrderItems.findOrCreate({
-        where: {
-          orderId: order[0].dataValues.id,
-          productId: req.params.productId
-        }
-      })
+    const orderItem = await OrderItems.findOrCreate({
+      where: {
+        orderId: order[0].dataValues.id,
+        productId: req.params.productId
+      }
+    })
 
-      // Must ensure quantity sums with preexisting quantity on the orderItem model or frontend
-      await orderItem[0].update({
-        quantity: req.body.quantity
-      })
+    // Must ensure quantity sums with preexisting quantity on the orderItem model or frontend
+    await orderItem[0].update({
+      quantity: req.body.quantity
+    })
 
-      res.status(200).json(orderItem)
-    } catch (err) {
-      next(err)
-    }
+    res.status(200).json(orderItem)
+  } catch (err) {
+    next(err)
   }
-)
+})

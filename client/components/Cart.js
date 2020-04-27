@@ -8,6 +8,7 @@ class Cart extends React.Component {
   constructor() {
     super()
     this.state = {
+      cart: [],
       quantity: 1
     }
 
@@ -17,6 +18,10 @@ class Cart extends React.Component {
   componentDidMount() {
     if (this.props.user.id) {
       this.props.fetchOrder(this.props.user.id)
+    } else {
+      this.setState({
+        cart: this.props.cart
+      })
     }
   }
 
@@ -27,7 +32,7 @@ class Cart extends React.Component {
   }
 
   render() {
-    const products = this.props.order.order.products || []
+    const products = this.props.order.order.products || this.state.cart
     const order = this.props.order.order
     const {id} = this.props.order.order
     let total = 0

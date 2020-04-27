@@ -26,6 +26,7 @@ export const fetchOrder = userId => {
   console.log('userId', userId)
   return async dispatch => {
     try {
+      console.log('ORDER THUNK RAN')
       const {data} = await axios.get(`/api/orders/${userId}/cart`)
       console.log('data', data)
       dispatch(setOrder(data))
