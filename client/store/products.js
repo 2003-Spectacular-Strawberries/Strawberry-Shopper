@@ -65,10 +65,10 @@ export const deleteProduct = id => {
   }
 }
 
-export const editProduct = id => {
+export const editProduct = product => {
   return async dispatch => {
-    await axios.update('/api/products/' + id)
-    dispatch(updateProduct(id))
+    const {data} = await axios.put('/api/products/' + product.id, product)
+    dispatch(updateProduct(data))
   }
 }
 
@@ -90,6 +90,7 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.products
+        //this needs to be updated and single product reducer
       }
     default:
       return state
