@@ -47,16 +47,27 @@ export class SingleUser extends React.Component {
         </button>
       </div>
     ) : this.props.user.id ? (
-      <div key={this.props.user.id} className="account">
-        <h1>Your Account</h1>
-        <p>Name:</p>
-        <p>{`${this.props.user.firstName} ${this.props.user.lastName}`}</p>
-        <p>Email:</p>
-        <p>{`${this.props.user.email}`}</p>
-        <p>Avatar:</p>
-        <img src={this.props.user.imageUrl} alt="" className="user-image" />
-        <p>Password:</p>
-        <p>*********</p>
+      <div className="account-container">
+        <div key={this.props.user.id} className="account">
+          <h1>Your Account</h1>
+          <div className="account-item">
+            {' '}
+            <p>Name:</p>
+            <p>{`${this.props.user.firstName} ${this.props.user.lastName}`}</p>
+          </div>
+          <div className="account-item">
+            <p>Email:</p>
+            <p>{`${this.props.user.email}`}</p>
+          </div>
+          <div className="account-item">
+            <p>Avatar:</p>
+            <img src={this.props.user.imageUrl} alt="" className="user-image" />
+          </div>
+          <div className="account-item">
+            <p>Password:</p>
+            <p>*********</p>
+          </div>
+        </div>
       </div>
     ) : (
       <h3>No User</h3>
