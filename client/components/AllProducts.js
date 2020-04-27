@@ -2,10 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
-import AddButton from './AddButton'
 import CategoryForm from './productsByCategory'
 import {addQuantity} from '../store/addToCart'
-
 
 class AllProducts extends React.Component {
   constructor() {
@@ -78,8 +76,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-
-  fetchProducts: category => dispatch(fetchProducts(category))
+  fetchProducts: category => dispatch(fetchProducts(category)),
   addQuantity: (productId, userId, quantity) =>
     dispatch(addQuantity(productId, userId, quantity))
 })
