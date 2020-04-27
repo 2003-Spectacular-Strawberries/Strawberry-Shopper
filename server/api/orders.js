@@ -12,12 +12,59 @@ router.get('/', async (req, res, next) => {
 })
 
 //get all products for a specific order, get the quantities of each product
+router.put('/guest', async (req, res, next) => {
+  try {
+    const order = await Order.create({
+      where: {
+        email: req.body.email,
+        shipping: req.body.shipping,
+        billing: req.body.billing,
+        price: req.body.price,
+        isCart: false
+      }
+    })
+
+    req.body.products.forEach(async function(product) {
+      await OrderItems.create({
+        where: {
+          orderId: order.id,
+          productId: product.id,
+          price: product.price,
+          quantity: product.quantity
+        }
+      })
+    })
+
+    res.json(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//get all products for a specific order, get the quantities of each product
 router.get('/:userId/cart', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {userId: req.params.userId, isCart: true},
       include: {model: Product}
     })
+    res.json(order)
+  } catch (err) {
+    next(err)
+  }
+})
+
+//get all products for a specific order, get the quantities of each product
+router.put('/:userId/cart/save', async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isCart: true
+      }
+    })
+
+    order.update({isCart: false})
     res.json(order)
   } catch (err) {
     next(err)

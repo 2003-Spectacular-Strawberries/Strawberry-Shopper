@@ -12,21 +12,19 @@ class Cart extends React.Component {
 
   render() {
     const products = this.props.order.order.products || []
-    const {id} = this.props.order.order
+    const order = this.props.order.order
+    const user = this.props.user
 
     return (
       <div>
         <h1>Shopping Cart</h1>
         <table className="cart-container">
           <tbody className="cart">
-            {this.props.user.id ? (
+            {user.id && order.id ? (
               products.map(product => {
                 return (
                   <tr key={product.id}>
-                    <td className="cart-item">
-                      {product.orderItems.quantity}{' '}
-                      {/* <input type="text" value={product.orderItems.quantity} /> */}
-                    </td>
+                    <td className="cart-item">{product.orderItems.quantity}</td>
                     <td className="cart-item">{product.name}</td>
                     <td className="cart-item">
                       ${(product.price / 100).toFixed(2) *
@@ -36,7 +34,9 @@ class Cart extends React.Component {
                       <button
                         id="delete"
                         type="submit"
-                        onClick={() => this.props.deleteProduct(id, product.id)}
+                        onClick={() =>
+                          this.props.deleteProduct(order.id, product.id)
+                        }
                         className="btn"
                       >
                         Remove
@@ -47,13 +47,17 @@ class Cart extends React.Component {
               })
             ) : (
               <tr>
-                <td>No Cart</td>
+                <td>
+                  <h2>Your Cart is Empty</h2>
+                </td>
               </tr>
             )}
           </tbody>
         </table>
-        <Link to={`/checkout/${id}`}>
-          <button type="button">Checkout</button>
+        <Link to={`/checkout/${order.id}`}>
+          <button type="button" className="btn">
+            Checkout
+          </button>
         </Link>
       </div>
     )
