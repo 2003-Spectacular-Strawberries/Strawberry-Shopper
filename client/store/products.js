@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {setProduct} from './singleProduct'
 
 const initialState = {
   products: []
@@ -32,10 +33,10 @@ export const removeProduct = productId => {
   }
 }
 
-export const updateProduct = productId => {
+export const updateProduct = product => {
   return {
     type: EDIT_PRODUCT,
-    productId
+    product
   }
 }
 
@@ -74,10 +75,11 @@ export const deleteProduct = id => {
   }
 }
 
-export const editProduct = id => {
+export const editProduct = product => {
   return async dispatch => {
-    await axios.update('/api/products/' + id)
-    dispatch(updateProduct(id))
+    const {data} = await axios.put('/api/products/' + product.id, product)
+    dispatch(updateProduct(data))
+    dispatch(setProduct(data))
   }
 }
 
@@ -98,7 +100,13 @@ const productsReducer = (state = initialState, action) => {
     case EDIT_PRODUCT:
       return {
         ...state,
-        products: action.products
+        products: state.products.map(product => {
+          if (product.id === action.product.id) {
+            return action.product
+          } else {
+            return product
+          }
+        })
       }
     default:
       return state
