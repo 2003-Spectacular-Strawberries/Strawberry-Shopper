@@ -16,9 +16,10 @@ class EditSingleProductForm extends React.Component {
 
   render() {
     return (
-      <form>
-        <h1>Name</h1>
+      <form className="editSingleProductAdminForm-container">
+        <h1 className="newProducFormInputHeader">Name</h1>
         <input
+          className="newProducFormInput"
           value={this.state.name}
           onChange={event => {
             this.setState({
@@ -26,8 +27,9 @@ class EditSingleProductForm extends React.Component {
             })
           }}
         />
-        <h1>Price</h1>
+        <h1 className="newProducFormInputHeader">Price</h1>
         <input
+          className="newProducFormInput"
           value={this.state.price}
           onChange={event => {
             this.setState({
@@ -35,8 +37,9 @@ class EditSingleProductForm extends React.Component {
             })
           }}
         />
-        <h1>Stock</h1>
+        <h1 className="newProducFormInputHeader">Stock</h1>
         <input
+          className="newProducFormInput"
           value={this.state.stock}
           onChange={event => {
             this.setState({
@@ -44,8 +47,9 @@ class EditSingleProductForm extends React.Component {
             })
           }}
         />
-        <h1>ImageUrl</h1>
+        <h1 className="newProducFormInputHeader">ImageUrl</h1>
         <input
+          className="newProducFormInput"
           value={this.state.imageUrl}
           onChange={event => {
             this.setState({
@@ -53,8 +57,9 @@ class EditSingleProductForm extends React.Component {
             })
           }}
         />
-        <h1>Description</h1>
+        <h1 className="newProducFormInputHeader">Description</h1>
         <input
+          className="newProducFormInput"
           value={this.state.description}
           onChange={event => {
             this.setState({
@@ -63,15 +68,18 @@ class EditSingleProductForm extends React.Component {
           }}
         />
 
-        <button
-          type="submit"
-          onClick={event => {
-            event.preventDefault()
-            this.props.editProduct(this.state)
-          }}
-        >
-          Edit
-        </button>
+        <div className="newProductCreateButton-container">
+          <button
+            className="newProductCreateButton"
+            type="submit"
+            onClick={event => {
+              event.preventDefault()
+              this.props.editProduct(this.state)
+            }}
+          >
+            Edit
+          </button>
+        </div>
       </form>
     )
   }
