@@ -9,6 +9,7 @@ import singleUser from './singleUser'
 import allUsers from './allUsers'
 import addToCartReducer from './addToCart'
 import orderReducer from './order'
+import categoryReducer from './category'
 
 const reducer = combineReducers({
   user: user,
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   singleUser: singleUser,
   products: productsReducer,
   product: productReducer,
+  category: categoryReducer,
   addToCart: addToCartReducer,
   order: orderReducer
 })

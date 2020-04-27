@@ -22,9 +22,12 @@ export const deletedProduct = productId => ({
 
 // Thunk Creators
 export const fetchOrder = userId => {
+  console.log('fetching via thunk')
+  console.log('userId', userId)
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/orders/${userId}/cart`)
+      console.log('data', data)
       dispatch(setOrder(data))
     } catch (error) {
       console.log(error)
