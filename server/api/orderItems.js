@@ -1,5 +1,8 @@
 const router = require('express').Router()
 const {OrderItems} = require('../db/models')
+const isAdminMiddleware = require('../auth/isAdmin')
+const isUserMiddleware = require('../auth/isUser')
+const onlyUserMiddleware = require('../auth/onlyUser')
 module.exports = router
 
 //this id will have to be the order id, which will have been pulled from the order table
@@ -26,7 +29,10 @@ router.put('/:orderId/product/:productId', async (req, res, next) => {
       where: {
         orderId: req.params.orderId,
         productId: req.params.productId
-      },
+      }
+    })
+    // Must ensure quantity sums with preexisting quantity on the orderItem model or frontend
+    await orderItem[0].update({
       quantity: req.body.quantity
     })
     res.status(200).json(orderItem)
