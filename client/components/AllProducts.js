@@ -4,8 +4,16 @@ import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
 import AddButton from './AddButton'
 import CategoryForm from './productsByCategory'
+import {addQuantity} from '../store/addToCart'
+
 
 class AllProducts extends React.Component {
+  constructor() {
+    super()
+
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
   componentDidMount() {
     this.props.fetchProducts(this.props.category)
   }
@@ -14,6 +22,15 @@ class AllProducts extends React.Component {
     if (this.props.category !== prevProps.category) {
       this.props.fetchProducts(this.props.category)
     }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+    const {user} = this.props
+
+    // This will add one item to the cart on the AllProducts page for the selected item with the corresponding add button
+    let productId = Number(event.target.parentNode.id)
+    this.props.addQuantity(productId, user.id, 1)
   }
 
   render() {
@@ -27,7 +44,7 @@ class AllProducts extends React.Component {
         <div className="all-products">
           {products.map(product => {
             return (
-              <div className="single-product" key={product.id}>
+              <div className="single-product" id={product.id} key={product.id}>
                 <Link
                   to={`/singleproduct/${product.id}`}
                   className="single-product-name"
@@ -42,9 +59,9 @@ class AllProducts extends React.Component {
                   />
                 </Link>
                 <p>Price ${(product.price / 100).toFixed(2)}</p>
-                <button className="btn">Add</button>
-
-                {/* <AddButton productId={product.id} /> */}
+                <form onSubmit={this.handleSubmit}>
+                  <button className="btn">Add</button>
+                </form>
               </div>
             )
           })}
@@ -61,7 +78,10 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
+
   fetchProducts: category => dispatch(fetchProducts(category))
+  addQuantity: (productId, userId, quantity) =>
+    dispatch(addQuantity(productId, userId, quantity))
 })
 
 export default connect(mapState, mapDispatch)(AllProducts)
