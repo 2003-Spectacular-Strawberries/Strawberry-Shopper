@@ -13,7 +13,8 @@ import {
   SingleUser,
   NewProduct,
   AllUsers,
-  AdminPage
+  AdminPage,
+  AdminSingleProduct
 } from './components'
 import {me} from './store'
 
@@ -48,6 +49,15 @@ class Routes extends Component {
           isAdmin && (
             <Switch>
               {/* Routes placed here are only available to admins after logging in */}
+              <Route path="/home" component={UserHome} />
+              <Route exact path="/allusers" component={AllUsers} />
+              <Route exact path="/allproducts" component={AllProducts} />
+              <Route
+                exact
+                path="/admin-singleproduct/:id"
+                component={AdminSingleProduct}
+              />
+              <Route exact path="/singleuser" component={SingleUser} />
               <Route exact path="/singleuser/:id" component={SingleUser} />
               <Route exact path="/allusers" component={AllUsers} />
               <Route exact path="/newproduct" component={NewProduct} />

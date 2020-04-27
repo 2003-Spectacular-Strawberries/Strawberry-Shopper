@@ -2,32 +2,58 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchOrder, deleteProduct} from '../store/order'
+import {addQuantity} from '../store/addToCart'
 
 class Cart extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      quantity: 1
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+  }
+
   componentDidMount() {
     if (this.props.user.id) {
       this.props.fetchOrder(this.props.user.id)
     }
   }
 
+  handleChange(event) {
+    this.setState({
+      quantity: Number(event.target.value)
+    })
+  }
+
   render() {
     const products = this.props.order.order.products || []
     const order = this.props.order.order
-    const user = this.props.user
+    const {id} = this.props.order.order
+    let total = 0
 
     return (
       <div>
-        <h1>Shopping Cart</h1>
         <table className="cart-container">
           <tbody className="cart">
-            {user.id && order.id ? (
+            {this.props.user.id ? (
               products.map(product => {
+                total += product.price * product.orderItems.quantity
                 return (
-                  <tr key={product.id}>
+                  <tr key={product.id} className="cart-row">
                     <td className="cart-item">{product.orderItems.quantity}</td>
+                    <td className="cart-item">
+                      <input
+                        className=" quantity-input"
+                        type="text"
+                        name="quantity"
+                        onChange={this.handleChange}
+                      />
+                    </td>
                     <td className="cart-item">{product.name}</td>
                     <td className="cart-item">
-                      ${(product.price / 100).toFixed(2) *
+                      $
+                      {(product.price / 100).toFixed(2) *
                         product.orderItems.quantity}
                     </td>
                     <td className="cart-item">
@@ -35,8 +61,22 @@ class Cart extends React.Component {
                         id="delete"
                         type="submit"
                         onClick={() =>
-                          this.props.deleteProduct(order.id, product.id)
+                          this.props.addQuantity(
+                            product.id,
+                            this.props.user.id,
+                            this.state.quantity
+                          )
                         }
+                        className="btn-outline"
+                      >
+                        Update
+                      </button>
+                    </td>
+                    <td className="cart-item">
+                      <button
+                        id="delete"
+                        type="submit"
+                        onClick={() => this.props.deleteProduct(id, product.id)}
                         className="btn"
                       >
                         Remove
@@ -52,10 +92,15 @@ class Cart extends React.Component {
                 </td>
               </tr>
             )}
+            <tr>
+              <td className="cart-checkout">
+                Total: ${(total / 100).toFixed(2)}
+              </td>
+            </tr>
           </tbody>
         </table>
         <Link to={`/checkout/${order.id}`}>
-          <button type="button" className="btn">
+          <button type="submit" className="btn">
             Checkout
           </button>
         </Link>
@@ -72,7 +117,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   fetchOrder: userId => dispatch(fetchOrder(userId)),
   deleteProduct: (orderId, productId) =>
-    dispatch(deleteProduct(orderId, productId))
+    dispatch(deleteProduct(orderId, productId)),
+  addQuantity: (productId, userId, quantity) =>
+    dispatch(addQuantity(productId, userId, quantity))
 })
 
 export default connect(mapState, mapDispatch)(Cart)

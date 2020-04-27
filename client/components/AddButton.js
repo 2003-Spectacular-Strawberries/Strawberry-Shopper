@@ -20,8 +20,9 @@ class AddButton extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    const {productId, user} = this.props
 
-    this.props.addQuantity(this.props.productId, 3, this.state.quantity)
+    this.props.addQuantity(productId, user.id, this.state.quantity)
   }
 
   render() {
