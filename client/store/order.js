@@ -7,6 +7,7 @@ const initialState = {
 // Action Types
 const SET_ORDER = 'SET_ORDER'
 const DELETED_PRODUCT = 'DELETE_PRODUCT'
+const SAVE_ORDER = 'SAVE_ORDER'
 
 // Action Creators
 export const setOrder = order => ({
@@ -32,6 +33,37 @@ export const fetchOrder = userId => {
   }
 }
 
+export const saveOrder = (
+  userId,
+  email,
+  shipping,
+  billing,
+  price,
+  products
+) => {
+  return async dispatch => {
+    try {
+      if (userId) {
+        console.log('have userId')
+        const data = await axios.put(`/api/orders/${userId}/cart/save`)
+        dispatch(setOrder(data))
+      } else if (products.length) {
+        console.log('have products.length')
+        const data = await axios.put(`/api/orders/guest/`, {
+          email,
+          shipping,
+          billing,
+          price,
+          products
+        })
+        dispatch(setOrder(data))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 export const deleteProduct = (orderId, productId) => {
   return async dispatch => {
     try {
@@ -47,6 +79,9 @@ export const deleteProduct = (orderId, productId) => {
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ORDER: {
+      return {...state, order: action.order}
+    }
+    case SAVE_ORDER: {
       return {...state, order: action.order}
     }
     case DELETED_PRODUCT:
