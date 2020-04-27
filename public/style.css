@@ -178,7 +178,7 @@ form div {
 }
 
 .newProducFormInput {
-  width: 500px;
+  width: 95%;
   height: 30px;
 }
 
@@ -198,6 +198,46 @@ form div {
 
 .newProductCreateButton-container {
   width: 500px;
+}
+
+/* Admin Single Product Form */
+.single-product-edit-form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  padding: 3rem;
+}
+
+.product-image-edit-form {
+  width: 300px;
+  height: 260px;
+}
+
+.current-product-edit-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+}
+
+.single-product-name-edit-form {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.single-product-name-edit-form:hover {
+  color: crimson;
+}
+
+.editSingleProductAdminForm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: pink;
+  width: 90%;
+  margin: 0 auto 100px;
 }
 
 /* AUTH FORM */
