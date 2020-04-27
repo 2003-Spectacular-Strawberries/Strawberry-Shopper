@@ -14,6 +14,19 @@ class EditSingleProductForm extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.product.id !== this.props.product.id) {
+      this.setState({
+        name: this.props.product.name,
+        price: this.props.product.price,
+        stock: this.props.product.stock,
+        imageUrl: this.props.product.imageUrl || '',
+        description: this.props.product.description || '',
+        id: this.props.product.id
+      })
+    }
+  }
+
   render() {
     return (
       <form className="editSingleProductAdminForm-container">
