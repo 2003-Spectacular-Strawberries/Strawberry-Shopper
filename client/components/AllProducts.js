@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
 import CategoryForm from './productsByCategory'
-import {addQuantity} from '../store/cart'
+import {addQuantity} from '../store/add'
 
 class AllProducts extends React.Component {
   constructor() {
@@ -27,6 +27,7 @@ class AllProducts extends React.Component {
     const {user} = this.props
     // This will add one item to the cart on the AllProducts page for the selected item with the corresponding add button
     let productId = Number(event.target.parentNode.id)
+
     this.props.addQuantity(productId, user.id, 1)
   }
 
