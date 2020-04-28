@@ -39,8 +39,14 @@ class Cart extends React.Component {
     const cart = this.props.user.id
       ? Object.values(this.props.order)
       : Object.values(this.props.cart)
-    const id = this.props.order.id || 'guest'
+
+    console.log('this.props.user', this.props.user)
+    console.log('this.props.order', this.props.order)
+    const id = this.props.user.orderId || 'guest'
     let total = 0
+
+    console.log('id', id)
+    console.log('cart', cart)
 
     return (
       <div>

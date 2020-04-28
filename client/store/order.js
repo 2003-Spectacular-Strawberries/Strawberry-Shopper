@@ -20,13 +20,9 @@ export const deletedProduct = productId => ({
 
 // Thunk Creators
 export const fetchOrder = userId => {
-  console.log('fetching...')
   return async dispatch => {
     try {
-      console.log('awaiting...')
       const {data} = await axios.get(`/api/orders/${userId}/cart`)
-
-      console.log('awaited...')
       const order = {}
 
       data.products.forEach(function(item) {
@@ -40,11 +36,8 @@ export const fetchOrder = userId => {
         }
       })
 
-      console.log('order', order)
-
       dispatch(setOrder(order))
     } catch (error) {
-      console.log('thunk error')
       console.log(error)
     }
   }
@@ -101,11 +94,11 @@ const orderReducer = (state = initialState, action) => {
       }
     }
     case DELETED_PRODUCT: {
-      const orderProducts = state.order.products
+      const orderProducts = state.products
       const filteredOrder = orderProducts.filter(
         product => product.id !== action.productId
       )
-      state.order.products = filteredOrder
+      state.products = filteredOrder
       return {...state}
     }
     default:
