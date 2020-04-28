@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchUser, deleteUser} from '../store/singleUser.js'
+import {fetchUser, deleteUser} from '../store/user.js'
 
 export class SingleUser extends React.Component {
   constructor() {
@@ -30,18 +30,11 @@ export class SingleUser extends React.Component {
   }
 
   render() {
-    console.log(this.props)
-    return this.props.singleUser.id ? (
-      <div className="single-user" key={this.props.singleUser.id}>
-        <h1>{`${this.props.singleUser.firstName} ${
-          this.props.singleUser.lastName
-        }`}</h1>
-        <img
-          src={this.props.singleUser.imageUrl}
-          alt=""
-          className="user-image"
-        />
-        <h3>{this.props.singleUser.email}</h3>
+    return this.props.user.id ? (
+      <div className="single-user" key={this.props.user.id}>
+        <h1>{`${this.props.user.firstName} ${this.props.user.lastName}`}</h1>
+        <img src={this.props.user.imageUrl} alt="" className="user-image" />
+        <h3>{this.props.user.email}</h3>
         <button type="submit" onClick={this.handleSubmit}>
           Delete User
         </button>
@@ -77,7 +70,6 @@ export class SingleUser extends React.Component {
 
 const mapState = state => {
   return {
-    singleUser: state.singleUser,
     user: state.user
   }
 }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {setProduct} from './singleProduct'
+import {setProduct} from './product'
 
 const initialState = {
   products: []
@@ -42,12 +42,10 @@ export const updateProduct = product => {
 
 // Thunk Creators
 export const fetchProducts = category => {
-  console.log('THUNK RAN WITH CATEGORY', category)
   return async dispatch => {
     try {
       if (!category || category.category === 'all-products') {
         const res = await axios.get('/api/products')
-        console.log('AXIOS GET RESULT', res.data)
         dispatch(setProducts(res.data))
       } else {
         const res = await axios.get(
@@ -90,13 +88,14 @@ const productsReducer = (state = initialState, action) => {
       return {...state, products: action.products}
     case ADD_PRODUCTS:
       return {...state, products: state.products.concat([action.product])}
-    case DELETE_PRODUCT:
-      return {
-        ...state,
-        products: state.products.filter(product => {
-          return product.id !== action.productId
-        })
-      }
+    case DELETE_PRODUCT: {
+      const allProducts = state.products
+      const filteredProducts = allProducts.filter(
+        product => product.id !== action.productId
+      )
+      state.products = filteredProducts
+      return {...state}
+    }
     case EDIT_PRODUCT:
       return {
         ...state,
