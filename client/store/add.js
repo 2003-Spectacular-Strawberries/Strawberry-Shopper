@@ -1,8 +1,7 @@
 import axios from 'axios'
 
 const initialState = {
-  quantity: 0,
-  cart: []
+  quantity: 0
 }
 
 const SET_QUANTITY = 'SET_QUANTITY'
