@@ -2,13 +2,13 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchOrder, deleteProduct} from '../store/order'
-import {addQuantity} from '../store/addToCart'
+import {fetchGuestCart} from '../store/cart'
+import {addQuantity} from '../store/add'
 
 class Cart extends React.Component {
   constructor() {
     super()
     this.state = {
-      cart: [],
       quantity: 1
     }
 
@@ -19,9 +19,7 @@ class Cart extends React.Component {
     if (this.props.user.id) {
       this.props.fetchOrder(this.props.user.id)
     } else {
-      this.setState({
-        cart: this.props.cart
-      })
+      this.props.fetchGuestCart()
     }
   }
 
@@ -32,21 +30,25 @@ class Cart extends React.Component {
   }
 
   render() {
-    const products = this.props.order.order.products || this.state.cart
-    const order = this.props.order.order
-    const {id} = this.props.order.order
+    const cart =
+      this.props.order.products || Object.values(this.props.cart) || []
+    const id = this.props.order.id || 'guest'
     let total = 0
+
+    console.log('this.props', this.props)
+    console.log('cart', cart)
 
     return (
       <div>
         <table className="cart-container">
           <tbody className="cart">
-            {this.props.user.id ? (
-              products.map(product => {
-                total += product.price * product.orderItems.quantity
+            {cart.length ? (
+              cart.map(item => {
+                total += item.price * item.quantity
+                const quantity = item.quantity || item.orderItems.quantity
                 return (
-                  <tr key={product.id} className="cart-row">
-                    <td className="cart-item">{product.orderItems.quantity}</td>
+                  <tr key={item.id} className="cart-row">
+                    <td className="cart-item">{quantity}</td>
                     <td className="cart-item">
                       <input
                         className=" quantity-input"
@@ -55,11 +57,10 @@ class Cart extends React.Component {
                         onChange={this.handleChange}
                       />
                     </td>
-                    <td className="cart-item">{product.name}</td>
+                    <td className="cart-item">{item.name}</td>
                     <td className="cart-item">
                       $
-                      {(product.price / 100).toFixed(2) *
-                        product.orderItems.quantity}
+                      {(item.price / 100).toFixed(2) * quantity}
                     </td>
                     <td className="cart-item">
                       <button
@@ -67,7 +68,7 @@ class Cart extends React.Component {
                         type="submit"
                         onClick={() =>
                           this.props.addQuantity(
-                            product.id,
+                            item.id,
                             this.props.user.id,
                             this.state.quantity
                           )
@@ -81,7 +82,7 @@ class Cart extends React.Component {
                       <button
                         id="delete"
                         type="submit"
-                        onClick={() => this.props.deleteProduct(id, product.id)}
+                        onClick={() => this.props.deleteProduct(id, item.id)}
                         className="btn"
                       >
                         Remove
@@ -104,7 +105,7 @@ class Cart extends React.Component {
             </tr>
           </tbody>
         </table>
-        <Link to={`/checkout/${order.id}`}>
+        <Link to={`/checkout/${id}`}>
           <button type="submit" className="btn">
             Checkout
           </button>
@@ -114,13 +115,17 @@ class Cart extends React.Component {
   }
 }
 
-const mapState = state => ({
-  order: state.order,
-  user: state.user
-})
+const mapState = state => {
+  return {
+    order: state.order,
+    user: state.user,
+    cart: state.cart
+  }
+}
 
 const mapDispatch = dispatch => ({
   fetchOrder: userId => dispatch(fetchOrder(userId)),
+  fetchGuestCart: () => dispatch(fetchGuestCart()),
   deleteProduct: (orderId, productId) =>
     dispatch(deleteProduct(orderId, productId)),
   addQuantity: (productId, userId, quantity) =>

@@ -5,12 +5,9 @@ import {fetchProducts, deleteProduct, editProduct} from '../store/products'
 import AllUsers from './AllUsers'
 import NewProduct from './NewProduct'
 
-//in order to test this you need to first go to server/auth/index.js and comment out lines 8-14.  (this is the if/else statement inside of the router.post(./login))  this appears to be fixed, but i am leaving this note here until i am sure
-
 class AdminPage extends React.Component {
   constructor() {
     super()
-
     this.state = {
       section: 'products'
     }
