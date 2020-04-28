@@ -56,7 +56,7 @@ router.put('/:id', isUserMiddleware, async (req, res, next) => {
   }
 })
 
-router.delete('/:id', isUserMiddleware, async (req, res, next) => {
+router.delete('/:id', isAdminMiddleware, async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {

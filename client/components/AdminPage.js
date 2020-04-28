@@ -7,7 +7,6 @@ import NewProduct from './NewProduct'
 class AdminPage extends React.Component {
   constructor() {
     super()
-
     this.state = {
       section: 'products'
     }

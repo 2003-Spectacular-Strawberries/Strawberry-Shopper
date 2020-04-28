@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
 import CategoryForm from './productsByCategory'
-import {addQuantity} from '../store/addToCart'
+import {addQuantity} from '../store/cart'
 
 class AllProducts extends React.Component {
   constructor() {
@@ -33,8 +33,6 @@ class AllProducts extends React.Component {
 
   render() {
     const {products} = this.props.products
-    console.log('THIS IS PRODUCTS IN STORE', products)
-    console.log('THIS IS CATEGORY IN STORE', this.props.category)
 
     return (
       <div className="all-products-container">

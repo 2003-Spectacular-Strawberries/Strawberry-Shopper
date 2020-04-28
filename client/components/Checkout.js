@@ -24,8 +24,8 @@ class Checkout extends React.Component {
   }
 
   render() {
-    const products = this.props.order.order.products || []
-    const order = this.props.order.order
+    const products = this.props.order.products || []
+    const order = this.props.order
     const user = this.props.user
 
     return (
@@ -76,7 +76,7 @@ class Checkout extends React.Component {
 }
 
 const mapState = state => ({
-  order: state.order,
+  order: state.order.order,
   user: state.user
 })
 

@@ -10,8 +10,6 @@ const isUserMiddleware = async (req, res, next) => {
   ) {
     next()
   } else {
-    console.log('REQ.BODY', req.body)
-    console.log('REQ.PARAMS', req.params)
     const error = new Error('Unautherized Operation')
     error.status = 401
     next(error)

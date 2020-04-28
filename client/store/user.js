@@ -1,30 +1,58 @@
 import axios from 'axios'
 import history from '../history'
 
-/**
- * ACTION TYPES
- */
+// ACTION TYPES
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const SET_USER = 'SET_USER'
+const FETCH_USER = 'FETCH_USER'
+const DELETE_USER = 'DELETE_USER'
 
-/**
- * INITIAL STATE
- */
-const defaultUser = {}
+// INITIAL STATE
+const initialState = {}
 
-/**
- * ACTION CREATORS
- */
-const getUser = user => ({type: GET_USER, user})
-const removeUser = () => ({type: REMOVE_USER})
+// ACTION CREATORS
+const getUser = user => ({
+  type: GET_USER,
+  user
+})
 
-/**
- * THUNK CREATORS
- */
+const removeUser = () => ({
+  type: REMOVE_USER
+})
+
+export const setUser = user => ({
+  type: SET_USER,
+  user
+})
+
+// THUNK CREATORS
+export const fetchUser = id => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/users/${id}`)
+      return dispatch(setUser(data))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
+export const deleteUser = id => {
+  return async dispatch => {
+    try {
+      await axios.delete(`/api/users/${id}`)
+      return dispatch(setUser({}))
+    } catch (err) {
+      console.log(err)
+    }
+  }
+}
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
-    dispatch(getUser(res.data || defaultUser))
+    dispatch(getUser(res.data || initialState))
   } catch (err) {
     console.error(err)
   }
@@ -56,16 +84,22 @@ export const logout = () => async dispatch => {
   }
 }
 
-/**
- * REDUCER
- */
-export default function(state = defaultUser, action) {
+// REDUCER
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER:
       return action.user
     case REMOVE_USER:
-      return defaultUser
+      return state
+    case SET_USER:
+      return action.user
+    case FETCH_USER:
+      return action.user
+    case DELETE_USER:
+      return action.user
     default:
       return state
   }
 }
+
+export default userReducer
