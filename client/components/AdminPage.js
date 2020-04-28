@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchProducts, deleteProduct, editProduct} from '../store/products'
-import AllUsers from './AllUsers'
+import {fetchProducts, deleteProduct} from '../store/products'
 import NewProduct from './NewProduct'
 
 class AdminPage extends React.Component {
@@ -65,26 +64,14 @@ class AdminPage extends React.Component {
                     >
                       Delete
                     </button>
-                    <button
-                      className="btn"
-                      type="submit"
-                      // onClick={event => {
-                      //   event.preventDefault()
-                      //   this.props.editProduct(product.id)
-                      // }}
-                    >
-                      Edit
-                    </button>
                     <p>Price ${(product.price / 100).toFixed(2)}</p>
                   </div>
                 )
               })}
             </div>
           </div>
-        ) : this.state.section === 'newproduct' ? (
-          <NewProduct />
         ) : (
-          <AllUsers />
+          <NewProduct />
         )}
       </div>
     )
@@ -98,8 +85,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   fetchProducts: () => dispatch(fetchProducts()),
-  deleteProduct: id => dispatch(deleteProduct(id)),
-  editProduct: id => dispatch(editProduct(id))
+  deleteProduct: id => dispatch(deleteProduct(id))
 })
 
 export default connect(mapState, mapDispatch)(AdminPage)
