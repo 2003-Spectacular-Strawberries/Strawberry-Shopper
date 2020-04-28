@@ -3,8 +3,6 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddButton from './AddButton'
 import {fetchProduct} from '../store/product'
-import {Navbar} from './components'
-import Routes from './routes'
 import EditSingleProductForm from './EditSingleProductForm'
 import {editProduct} from '../store/products'
 
