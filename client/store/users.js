@@ -1,10 +1,13 @@
 import axios from 'axios'
 
+const initialState = []
+
 export const SET_USERS = 'SET_USERS'
 export const FETCH_USERS = 'FETCH_USERS'
 export const REMOVE_USER = 'REMOVE_USER'
 export const DELETE_USER = 'DELETE_USER'
 
+// ACTION CREATORS
 export const setUsers = users => {
   return {type: SET_USERS, users}
 }
@@ -13,6 +16,7 @@ export const removeUser = id => {
   return {type: REMOVE_USER, id}
 }
 
+// THUNKS
 export const fetchUsers = () => {
   return async dispatch => {
     try {
@@ -35,9 +39,8 @@ export const deleteUser = id => {
   }
 }
 
-const initialState = []
-
-export default function allUsersReducer(state = initialState, action) {
+// REDUCER
+const usersReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USERS:
       return action.users
@@ -57,3 +60,5 @@ export default function allUsersReducer(state = initialState, action) {
       return state
   }
 }
+
+export default usersReducer

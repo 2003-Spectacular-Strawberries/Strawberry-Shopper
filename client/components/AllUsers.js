@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchUsers, removeUser, deleteUser} from '../store/allUsers'
+import {fetchUsers, removeUser, deleteUser} from '../store/users'
 import axios from 'axios'
 // import {User} from '../../server/db/models'
 

@@ -2,23 +2,23 @@ import {combineReducers, createStore, applyMiddleware} from 'redux'
 import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import user from './user'
+import userReducer from './user'
+import usersReducer from './users'
+import productReducer from './product'
 import productsReducer from './products'
-import productReducer from './singleProduct'
-import singleUser from './singleUser'
-import allUsers from './allUsers'
-import addToCartReducer from './addToCart'
-import orderReducer from './order'
 import categoryReducer from './category'
+import cartReducer from './cart'
+import orderReducer from './order'
+import addReducer from './add'
 
 const reducer = combineReducers({
-  user: user,
-  users: allUsers,
-  singleUser: singleUser,
-  products: productsReducer,
+  add: addReducer,
+  user: userReducer,
+  users: usersReducer,
   product: productReducer,
+  products: productsReducer,
   category: categoryReducer,
-  addToCart: addToCartReducer,
+  cart: cartReducer,
   order: orderReducer
 })
 

@@ -27,6 +27,17 @@ export const fetchProduct = id => {
   }
 }
 
+export const getPrice = productId => {
+  return async dispatch => {
+    try {
+      const {data} = await axios.get(`/api/products/${id}`)
+      dispatch(setProduct(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 // Products Reducer
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
