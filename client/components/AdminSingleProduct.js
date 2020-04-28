@@ -2,7 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import AddButton from './AddButton'
-import {fetchProduct} from '../store/singleProduct'
+import {fetchProduct} from '../store/product'
+
 import EditSingleProductForm from './EditSingleProductForm'
 import {editProduct} from '../store/products'
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addQuantity} from '../store/addToCart'
+import {addQuantity} from '../store/add'
+import {updateGuestCart} from '../store/cart'
 
 class AddButton extends React.Component {
   constructor() {
@@ -21,8 +22,16 @@ class AddButton extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     const {productId, user} = this.props
+    if (user.id) {
+      this.props.addQuantity(productId, user.id, this.state.quantity)
+    } else {
+      let item
+      this.props.products.forEach(function(product) {
+        if (productId === product.id) item = product
+      })
 
-    this.props.addQuantity(productId, user.id, this.state.quantity)
+      this.props.updateGuestCart(item, this.state.quantity)
+    }
   }
 
   render() {
@@ -44,12 +53,14 @@ class AddButton extends React.Component {
 
 const mapState = state => ({
   addToCart: state.addToCart,
+  products: state.products.products,
   user: state.user
 })
 
 const mapDispatch = dispatch => ({
   addQuantity: (productId, userId, quantity) =>
-    dispatch(addQuantity(productId, userId, quantity))
+    dispatch(addQuantity(productId, userId, quantity)),
+  updateGuestCart: (item, quantity) => dispatch(updateGuestCart(item, quantity))
 })
 
 export default connect(mapState, mapDispatch)(AddButton)

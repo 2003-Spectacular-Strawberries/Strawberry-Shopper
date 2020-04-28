@@ -2,15 +2,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts, deleteProduct} from '../store/products'
-import AllUsers from './AllUsers'
 import NewProduct from './NewProduct'
-
-//in order to test this you need to first go to server/auth/index.js and comment out lines 8-14.  (this is the if/else statement inside of the router.post(./login))  this appears to be fixed, but i am leaving this note here until i am sure
 
 class AdminPage extends React.Component {
   constructor() {
     super()
-
     this.state = {
       section: 'products'
     }
@@ -43,15 +39,15 @@ class AdminPage extends React.Component {
         </div>
 
         {this.state.section === 'products' ? (
-          <div className="all-products">
-            <div className="all-products-container">
+          <div className="all-products-container">
+            <div className="all-products">
               {this.props.products.products.map(product => {
                 return (
                   <div className="single-product" key={product.id}>
-                    <Link to={`/singleproduct/${product.id}`}>
+                    <Link to={`/admin-singleproduct/${product.id}`}>
                       {product.name}
                     </Link>
-                    <Link to="/singleproduct/id">
+                    <Link to={`/admin-singleproduct/${product.id}`}>
                       <img
                         src={product.imageUrl}
                         alt=""
@@ -63,7 +59,7 @@ class AdminPage extends React.Component {
                       type="submit"
                       onClick={event => {
                         event.preventDefault()
-                        this.props.editProduct(product.id)
+                        this.props.deleteProduct(product.id)
                       }}
                     >
                       Delete
@@ -74,10 +70,8 @@ class AdminPage extends React.Component {
               })}
             </div>
           </div>
-        ) : this.state.section === 'newproduct' ? (
-          <NewProduct />
         ) : (
-          <AllUsers />
+          <NewProduct />
         )}
       </div>
     )

@@ -7,21 +7,16 @@ const initialState = {
 
 const SET_QUANTITY = 'SET_QUANTITY'
 
+// ACTION CREATORS
 const setQuantity = quantity => ({
   type: SET_QUANTITY,
   quantity
 })
 
-// THUNK
-
+// THUNKS
 export const addQuantity = (productId, userId, quantity) => {
-  console.log('STATE QUANTITY')
-
   return async dispatch => {
     try {
-      // Get current quantity of selected item
-      // Add that quantity to the incoming quantity
-
       await axios.put(`/api/orders/user/${userId}/product/${productId}`, {
         quantity
       })
@@ -32,7 +27,8 @@ export const addQuantity = (productId, userId, quantity) => {
   }
 }
 
-const addToCartReducer = (state = initialState, action) => {
+// REDUCER
+const addReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_QUANTITY:
       return {...state, quantity: action.quantity}
@@ -41,4 +37,4 @@ const addToCartReducer = (state = initialState, action) => {
   }
 }
 
-export default addToCartReducer
+export default addReducer
