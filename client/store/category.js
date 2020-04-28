@@ -6,12 +6,11 @@ const initialState = {
 
 const SET_CATEGORY = 'SET_CATEGORY'
 
-export const setCategory = category => {
-  return {
-    type: SET_CATEGORY,
-    category
-  }
-}
+// ACTION CREATORS
+export const setCategory = category => ({
+  type: SET_CATEGORY,
+  category
+})
 
 export const changeCategory = category => {
   return async dispatch => {
@@ -19,7 +18,7 @@ export const changeCategory = category => {
   }
 }
 
-// Products Reducer
+// REDUCER
 const categoryReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CATEGORY:

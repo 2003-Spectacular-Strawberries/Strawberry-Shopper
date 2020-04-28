@@ -5,7 +5,7 @@ const OrderItems = db.define('orderItems', {
   quantity: {
     type: Sequelize.INTEGER,
     // allowNull: false,
-    default: 1
+    defaultValue: 1
   },
   price: {
     type: Sequelize.DECIMAL,
