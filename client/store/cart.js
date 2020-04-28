@@ -2,24 +2,24 @@ import axios from 'axios'
 
 const initialState = {}
 
-const UPDATE_GUEST_CART = 'UPDATE_GUEST_CART'
-const FETCH_GUEST_CART = 'FETCH_GUEST_CART'
+const UPDATE_CART = 'UPDATE_CART'
+const FETCH_CART = 'FETCH_CART'
 
 // ACTION CREATORS
-export const updateGuestCart = (item, quantity) => ({
-  type: UPDATE_GUEST_CART,
+export const updateCart = (item, quantity) => ({
+  type: UPDATE_CART,
   item,
   quantity
 })
 
-export const fetchGuestCart = () => ({
-  type: FETCH_GUEST_CART
+export const fetchCart = () => ({
+  type: FETCH_CART
 })
 
 // REDUCER
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case UPDATE_GUEST_CART: {
+    case UPDATE_CART: {
       const item = {}
       item[action.item.id] = {
         id: action.item.id,
@@ -30,9 +30,6 @@ const cartReducer = (state = initialState, action) => {
         quantity: action.quantity
       }
 
-      console.log('old state', state)
-      console.log('item', item)
-      console.log('new state', {...state, ...item})
       return {...state, ...item}
     }
     default:

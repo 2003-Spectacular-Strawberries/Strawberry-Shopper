@@ -2,8 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchOrder, deleteProduct} from '../store/order'
-import {fetchGuestCart} from '../store/cart'
+import {fetchCart} from '../store/cart'
 import {addQuantity} from '../store/add'
+import {me} from '../store/user'
 
 class Cart extends React.Component {
   constructor() {
@@ -15,11 +16,16 @@ class Cart extends React.Component {
     this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
-    if (this.props.user.id) {
-      this.props.fetchOrder(this.props.user.id)
-    } else {
-      this.props.fetchGuestCart()
+  async componentDidMount() {
+    try {
+      await this.props.me()
+      if (this.props.user.id) {
+        this.props.fetchOrder(this.props.user.id)
+      }
+
+      this.props.fetchCart()
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -30,13 +36,10 @@ class Cart extends React.Component {
   }
 
   render() {
-    const cart =
-      this.props.order.products || Object.values(this.props.cart) || []
+    console.log('this.props.cart', this.props.cart)
+    const cart = Object.values(this.props.cart) || []
     const id = this.props.order.id || 'guest'
     let total = 0
-
-    console.log('this.props', this.props)
-    console.log('cart', cart)
 
     return (
       <div>
@@ -44,6 +47,9 @@ class Cart extends React.Component {
           <tbody className="cart">
             {cart.length ? (
               cart.map(item => {
+                console.log('item', item)
+                console.log('item.price', item.price)
+                console.log('item.quantity', item.quantity)
                 total += item.price * item.quantity
                 const quantity = item.quantity || item.orderItems.quantity
                 return (
@@ -125,11 +131,12 @@ const mapState = state => {
 
 const mapDispatch = dispatch => ({
   fetchOrder: userId => dispatch(fetchOrder(userId)),
-  fetchGuestCart: () => dispatch(fetchGuestCart()),
+  fetchCart: () => dispatch(fetchCart()),
   deleteProduct: (orderId, productId) =>
     dispatch(deleteProduct(orderId, productId)),
   addQuantity: (productId, userId, quantity) =>
-    dispatch(addQuantity(productId, userId, quantity))
+    dispatch(addQuantity(productId, userId, quantity)),
+  me: () => dispatch(me())
 })
 
 export default connect(mapState, mapDispatch)(Cart)
