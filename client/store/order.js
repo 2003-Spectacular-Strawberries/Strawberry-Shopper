@@ -6,7 +6,7 @@ const initialState = {
 
 // Action Types
 const SET_ORDER = 'SET_ORDER'
-const DELETED_PRODUCT = 'DELETE_PRODUCT'
+const DELETED_PRODUCT = 'DELETED_PRODUCT'
 const SAVE_ORDER = 'SAVE_ORDER'
 
 // Action Creators

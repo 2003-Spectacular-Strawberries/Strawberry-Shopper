@@ -25,7 +25,6 @@ class AllProducts extends React.Component {
   handleSubmit(event) {
     event.preventDefault()
     const {user} = this.props
-
     // This will add one item to the cart on the AllProducts page for the selected item with the corresponding add button
     let productId = Number(event.target.parentNode.id)
     this.props.addQuantity(productId, user.id, 1)

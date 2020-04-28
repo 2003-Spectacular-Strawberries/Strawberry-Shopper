@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {setProduct} from './singleProduct'
+import {setProduct} from './product'
 
 const initialState = {
   products: []
@@ -88,13 +88,14 @@ const productsReducer = (state = initialState, action) => {
       return {...state, products: action.products}
     case ADD_PRODUCTS:
       return {...state, products: state.products.concat([action.product])}
-    case DELETE_PRODUCT:
-      return {
-        ...state,
-        products: state.products.filter(product => {
-          return product.id !== action.productId
-        })
-      }
+    case DELETE_PRODUCT: {
+      const allProducts = state.products
+      const filteredProducts = allProducts.filter(
+        product => product.id !== action.productId
+      )
+      state.products = filteredProducts
+      return {...state}
+    }
     case EDIT_PRODUCT:
       return {
         ...state,
