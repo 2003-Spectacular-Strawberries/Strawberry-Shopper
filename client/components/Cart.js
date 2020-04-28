@@ -17,10 +17,8 @@ class Cart extends React.Component {
   }
 
   async componentDidMount() {
-    console.log('CDM')
     try {
       await this.props.me()
-      console.log('this.props.user', this.props.user)
       if (this.props.user.id) {
         this.props.fetchOrder(this.props.user.id)
       }
@@ -38,20 +36,17 @@ class Cart extends React.Component {
   }
 
   render() {
-    console.log('this.props.order', this.props.order)
-    console.log('this.props.cart', this.props.cart)
-    const cart =
-      Object.values(this.props.order) || Object.values(this.props.cart) || []
+    const cart = this.props.user.id
+      ? Object.values(this.props.order)
+      : Object.values(this.props.cart)
     const id = this.props.order.id || 'guest'
     let total = 0
-
-    console.log('cart', cart)
 
     return (
       <div>
         <table className="cart-container">
           <tbody className="cart">
-            {cart[0].quantity ? (
+            {cart.length ? (
               cart.map(item => {
                 total += item.price * item.quantity
                 const quantity = item.quantity || item.orderItems.quantity

@@ -1,8 +1,6 @@
 import axios from 'axios'
 
-const initialState = {
-  order: {}
-}
+const initialState = {}
 
 // Action Types
 const SET_ORDER = 'SET_ORDER'
@@ -96,8 +94,11 @@ export const deleteProduct = (orderId, productId) => {
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ORDER: {
-      const order = action.order || {}
-      return order
+      if (action.order) {
+        return {...state, ...action.order}
+      } else {
+        return state
+      }
     }
     case DELETED_PRODUCT: {
       const orderProducts = state.order.products
