@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const initialState = {}
+const initialState = {
+  orderId: null,
+  items: {}
+}
 
 // Action Types
 const SET_ORDER = 'SET_ORDER'
@@ -23,10 +26,13 @@ export const fetchOrder = userId => {
   return async dispatch => {
     try {
       const {data} = await axios.get(`/api/orders/${userId}/cart`)
-      const order = {}
+      const order = {
+        orderId: data.id,
+        items: {}
+      }
 
       data.products.forEach(function(item) {
-        order[item.id] = {
+        order.items[item.id] = {
           id: item.id,
           name: item.name,
           price: item.price,
@@ -73,6 +79,8 @@ export const saveOrder = (
 }
 
 export const deleteProduct = (orderId, productId) => {
+  console.log('orderId', orderId)
+  console.log('productId', productId)
   return async dispatch => {
     try {
       await axios.delete(`/api/orderItems/${orderId}/product/${productId}`)
@@ -88,18 +96,15 @@ const orderReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_ORDER: {
       if (action.order) {
-        return {...state, ...action.order}
+        return action.order
       } else {
         return state
       }
     }
     case DELETED_PRODUCT: {
-      const orderProducts = state.products
-      const filteredOrder = orderProducts.filter(
-        product => product.id !== action.productId
-      )
-      state.products = filteredOrder
-      return {...state}
+      const {[action.productId]: removed, ...remainingOrder} = state.items
+      if (removed) return {...state, items: {...remainingOrder}}
+      else return state
     }
     default:
       return state
