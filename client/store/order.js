@@ -65,6 +65,7 @@ export const deleteProduct = (orderId, productId) => {
   return async dispatch => {
     try {
       await axios.delete(`/api/orderItems/${orderId}/product/${productId}`)
+
       dispatch(deletedProduct(productId))
     } catch (error) {
       console.log(error)
@@ -80,11 +81,13 @@ const orderReducer = (state = initialState, action) => {
       return order
     }
     case DELETED_PRODUCT: {
-      const orderProducts = state.order.products
+      const orderProducts = state.products
+
       const filteredOrder = orderProducts.filter(
         product => product.id !== action.productId
       )
-      state.order.products = filteredOrder
+      state.products = filteredOrder
+
       return {...state}
     }
     default:
