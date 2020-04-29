@@ -9,7 +9,6 @@ import {updateCart} from '../store/cart'
 class AllProducts extends React.Component {
   constructor() {
     super()
-
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -36,7 +35,7 @@ class AllProducts extends React.Component {
       this.props.products.forEach(function(product) {
         if (productId === product.id) item = product
       })
-      this.props.updateCart(item, 1)
+      await this.props.updateCart(item, 1)
     }
 
     this.props.history.push(`/cart`)
