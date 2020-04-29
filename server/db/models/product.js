@@ -32,7 +32,7 @@ const Product = db.define('product', {
     allowNull: true
   },
   imageUrl: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     defaultValue: 'https://i.imgur.com/POLRlNo.jpg',
     validate: {
       isUrl: true

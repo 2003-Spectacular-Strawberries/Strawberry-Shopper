@@ -74,7 +74,7 @@ class Cart extends React.Component {
                     <td className="cart-item">{item.name}</td>
                     <td className="cart-item">
                       $
-                      {(item.price / 100).toFixed(2) * quantity}
+                      {(quantity * item.price / 100).toFixed(2)}
                     </td>
                     <td className="cart-item">
                       <button
