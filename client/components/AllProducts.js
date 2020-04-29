@@ -4,8 +4,7 @@ import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
 import CategoryForm from './productsByCategory'
 import {addQuantity} from '../store/add'
-import {updateCart} from '../store/cart'
-
+import {updateCart, addFromAllProducts} from '../store/cart'
 
 class AllProducts extends React.Component {
   constructor() {
@@ -36,7 +35,7 @@ class AllProducts extends React.Component {
       this.props.products.forEach(function(product) {
         if (productId === product.id) item = product
       })
-      await this.props.updateCart(item, 1)
+      await this.props.addFromAllProducts(item, 1)
     }
 
     this.props.history.push(`/cart`)
@@ -88,7 +87,9 @@ const mapDispatch = dispatch => ({
   fetchProducts: category => dispatch(fetchProducts(category)),
   addQuantity: (productId, userId, quantity) =>
     dispatch(addQuantity(productId, userId, quantity)),
-  updateCart: (item, quantity) => dispatch(updateCart(item, quantity))
+  updateCart: (item, quantity) => dispatch(updateCart(item, quantity)),
+  addFromAllProducts: (item, quantity) =>
+    dispatch(addFromAllProducts(item, quantity))
 })
 
 export default connect(mapState, mapDispatch)(AllProducts)

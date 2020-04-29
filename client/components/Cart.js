@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchOrder, deleteProduct} from '../store/order'
-import {fetchCart, removeItem} from '../store/cart'
+import {fetchCart, removeItem, updateCart} from '../store/cart'
 import {addQuantity} from '../store/add'
 import {me} from '../store/user'
 
@@ -26,6 +26,12 @@ class Cart extends React.Component {
       this.props.fetchCart()
     } catch (err) {
       console.log(err)
+    }
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (this.props.cart !== prevProps.cart) {
+      await this.props.fetchOrder(this.props.user.id)
     }
   }
 
@@ -73,20 +79,24 @@ class Cart extends React.Component {
                     </td>
                     <td className="cart-item">{item.name}</td>
                     <td className="cart-item">
-                      $
-                      {(quantity * item.price / 100).toFixed(2)}
+                      ${(quantity * item.price / 100).toFixed(2)}
                     </td>
                     <td className="cart-item">
                       <button
                         id="delete"
                         type="submit"
-                        onClick={() =>
+                        onClick={async () => {
+                          this.props.updateCart(
+                            item,
+                            Math.abs(this.state.quantity)
+                          )
                           this.props.addQuantity(
                             item.id,
                             this.props.user.id,
-                            this.state.quantity
+                            Math.abs(this.state.quantity)
                           )
-                        }
+                          await this.props.fetchOrder(this.props.user.id)
+                        }}
                         className="btn-outline"
                       >
                         Update
@@ -145,6 +155,7 @@ const mapDispatch = dispatch => ({
     dispatch(deleteProduct(orderId, productId)),
   addQuantity: (productId, userId, quantity) =>
     dispatch(addQuantity(productId, userId, quantity)),
+  updateCart: (item, quantity) => dispatch(updateCart(item, quantity)),
   removeItem: productId => dispatch(removeItem(productId)),
   me: () => dispatch(me())
 })

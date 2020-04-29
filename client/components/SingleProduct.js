@@ -35,10 +35,13 @@ class SingleProduct extends React.Component {
       await this.props.addQuantity(
         this.props.product.id,
         user.id,
-        this.state.quantity
+        Math.abs(this.state.quantity)
       )
     } else {
-      await this.props.updateCart(this.props.product, this.state.quantity)
+      await this.props.updateCart(
+        this.props.product,
+        Math.abs(this.state.quantity)
+      )
     }
 
     this.props.history.push(`/cart`)
