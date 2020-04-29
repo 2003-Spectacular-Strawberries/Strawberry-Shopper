@@ -37,7 +37,7 @@ class Cart extends React.Component {
       this.props.fetchOrder(this.props.user.id)
     }
 
-    const field = document.getElementById('quantity-input')
+    const field = document.getElementById(productId)
     field.value = ''
   }
 
@@ -88,11 +88,14 @@ class Cart extends React.Component {
                     <td className="cart-item">
                       <input
                         className="quantity-input"
-                        id="quantity-input"
+                        id={item.id}
                         type="text"
                         name="quantity"
                         onChange={this.handleChange}
                       />
+                    </td>
+                    <td className="cart-item">
+                      <img src={item.imageUrl} className="cart-image" />
                     </td>
                     <td className="cart-item">{item.name}</td>
                     <td className="cart-item">
