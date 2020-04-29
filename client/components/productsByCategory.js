@@ -18,7 +18,6 @@ class CategoryForm extends React.Component {
       category: event.target.value
     })
     this.props.changeCategory(event.target.value)
-    console.log('STATE CATEGORY', this.state.category)
   }
 
   render() {

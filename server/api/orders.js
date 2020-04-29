@@ -47,7 +47,6 @@ router.put('/guest', async (req, res, next) => {
 //get all products for a specific order, get the quantities of each product
 router.get('/:userId/cart', isUserMiddleware, async (req, res, next) => {
   try {
-    console.log('API ROUTE RUNNING', req.params.userId)
     const order = await Order.findOne({
       where: {userId: req.params.userId, isCart: true},
       include: {model: Product}

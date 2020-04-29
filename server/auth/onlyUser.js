@@ -12,7 +12,6 @@ const onlyUserMiddleware = async (req, res, next) => {
     if (parseInt(currentOrder.userId, 10) === req.user.dataValues.id) {
       next()
     }
-    console.log('ORDER ID', req.params.orderId)
   } else {
     const error = new Error('Unautherized Operation')
     error.status = 401
