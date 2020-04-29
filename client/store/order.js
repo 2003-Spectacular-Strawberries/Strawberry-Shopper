@@ -79,8 +79,6 @@ export const saveOrder = (
 }
 
 export const deleteProduct = (orderId, productId) => {
-  console.log('orderId', orderId)
-  console.log('productId', productId)
   return async dispatch => {
     try {
       await axios.delete(`/api/orderItems/${orderId}/product/${productId}`)

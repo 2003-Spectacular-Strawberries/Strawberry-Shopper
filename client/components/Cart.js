@@ -44,8 +44,6 @@ class Cart extends React.Component {
   }
 
   render() {
-    console.log('this.props', this.props)
-
     const orderId = this.props.orderId || 'guest'
 
     const cart = this.props.user.id
