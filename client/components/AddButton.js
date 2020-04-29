@@ -27,7 +27,6 @@ class AddButton extends React.Component {
       if (productId === product.id) item = product
     })
 
-    console.log('item', item, 'qty', this.state.quantity)
     this.props.updateCart(item, this.state.quantity)
 
     if (user.id) {
