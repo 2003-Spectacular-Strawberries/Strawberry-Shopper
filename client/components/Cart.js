@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchOrder, deleteProduct} from '../store/order'
-import {fetchCart, removeItem} from '../store/cart'
+import {fetchCart, removeItem, editItem} from '../store/cart'
 import {addQuantity} from '../store/add'
 import {me} from '../store/user'
 
@@ -15,9 +15,41 @@ class Cart extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleRemoval = this.handleRemoval.bind(this)
+    this.handleUpdate = this.handleUpdate.bind(this)
+    this.updateCart = this.updateCart.bind(this)
   }
 
-  async componentDidMount() {
+  handleChange(event) {
+    this.setState({
+      quantity: Number(event.target.value)
+    })
+  }
+
+  async handleUpdate(orderId, productId) {
+    if (orderId === 'guest') {
+      this.props.editItem(productId, this.state.quantity)
+    } else {
+      await this.props.addQuantity(
+        productId,
+        this.props.user.id,
+        this.state.quantity
+      )
+      this.props.fetchOrder(this.props.user.id)
+    }
+
+    const field = document.getElementById('quantity-input')
+    field.value = ''
+  }
+
+  handleRemoval(orderId, productId) {
+    if (orderId === 'guest') {
+      this.props.removeItem(productId)
+    } else {
+      this.props.deleteProduct(orderId, productId)
+    }
+  }
+
+  async updateCart() {
     try {
       await this.props.me()
       if (this.props.user.id) {
@@ -29,18 +61,8 @@ class Cart extends React.Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({
-      quantity: Number(event.target.value)
-    })
-  }
-
-  handleRemoval(orderId, productId) {
-    if (orderId === 'guest') {
-      this.props.removeItem(productId)
-    } else {
-      this.props.deleteProduct(orderId, productId)
-    }
+  componentDidMount() {
+    this.updateCart()
   }
 
   render() {
@@ -65,7 +87,8 @@ class Cart extends React.Component {
                     <td className="cart-item">{quantity}</td>
                     <td className="cart-item">
                       <input
-                        className=" quantity-input"
+                        className="quantity-input"
+                        id="quantity-input"
                         type="text"
                         name="quantity"
                         onChange={this.handleChange}
@@ -80,13 +103,7 @@ class Cart extends React.Component {
                       <button
                         id="delete"
                         type="submit"
-                        onClick={() =>
-                          this.props.addQuantity(
-                            item.id,
-                            this.props.user.id,
-                            this.state.quantity
-                          )
-                        }
+                        onClick={() => this.handleUpdate(orderId, item.id)}
                         className="btn-outline"
                       >
                         Update
@@ -146,6 +163,7 @@ const mapDispatch = dispatch => ({
   addQuantity: (productId, userId, quantity) =>
     dispatch(addQuantity(productId, userId, quantity)),
   removeItem: productId => dispatch(removeItem(productId)),
+  editItem: (productId, quantity) => dispatch(editItem(productId, quantity)),
   me: () => dispatch(me())
 })
 
