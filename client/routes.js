@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {
   Cart,
   Checkout,
+  Confirmation,
   Login,
   Signup,
   UserHome,
@@ -37,6 +38,7 @@ class Routes extends Component {
         <Route exact path="/allproducts" component={AllProducts} />
         <Route exact path="/singleproduct/:id" component={SingleProduct} />
         <Route exact path="/checkout/:id" component={Checkout} />
+        <Route exact path="/confirmation" component={Confirmation} />
         <Route exact path="/cart" component={Cart} />
         {isLoggedIn &&
           !isAdmin && (
