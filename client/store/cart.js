@@ -5,6 +5,7 @@ const initialState = {}
 const UPDATE_CART = 'UPDATE_CART'
 const FETCH_CART = 'FETCH_CART'
 const REMOVE_ITEM = 'REMOVE_ITEM'
+const EDIT_ITEM = 'EDIT_ITEM'
 
 // ACTION CREATORS
 export const updateCart = (item, quantity) => ({
@@ -20,6 +21,12 @@ export const fetchCart = () => ({
 export const removeItem = productId => ({
   type: REMOVE_ITEM,
   productId
+})
+
+export const editItem = (productId, quantity) => ({
+  type: EDIT_ITEM,
+  productId,
+  quantity
 })
 
 // REDUCER
@@ -42,6 +49,15 @@ const cartReducer = (state = initialState, action) => {
       const {[action.productId]: removed, ...remainingCart} = state
       if (removed) return remainingCart
       else return state
+    }
+    case EDIT_ITEM: {
+      const newItem = {
+        [action.productId]: {
+          ...state[action.productId],
+          ...{quantity: action.quantity}
+        }
+      }
+      return {...state, ...newItem}
     }
     default:
       return state

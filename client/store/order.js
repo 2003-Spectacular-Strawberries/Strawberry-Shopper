@@ -8,7 +8,6 @@ const initialState = {
 // Action Types
 const SET_ORDER = 'SET_ORDER'
 const DELETED_PRODUCT = 'DELETED_PRODUCT'
-const SAVE_ORDER = 'SAVE_ORDER'
 
 // Action Creators
 export const setOrder = order => ({
@@ -50,27 +49,25 @@ export const fetchOrder = userId => {
 }
 
 export const saveOrder = (
-  userId,
+  userId = null,
   email,
   shipping,
-  billing,
+  billing = shipping,
   price,
   products
 ) => {
-  return async dispatch => {
+  return async () => {
     try {
       if (userId) {
-        const data = await axios.put(`/api/orders/${userId}/cart/save`)
-        dispatch(setOrder(data))
+        await axios.put(`/api/orders/${userId}/cart/save`)
       } else if (products.length) {
-        const data = await axios.put(`/api/orders/guest/`, {
+        await axios.put(`/api/orders/guest/`, {
           email,
           shipping,
           billing,
           price,
           products
         })
-        dispatch(setOrder(data))
       }
     } catch (error) {
       console.log(error)

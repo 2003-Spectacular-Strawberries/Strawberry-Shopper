@@ -31,9 +31,8 @@ router.put('/guest', async (req, res, next) => {
       await OrderItems.create({
         where: {
           orderId: order.id,
-          productId: product.id,
-          price: product.price,
-          quantity: product.quantity
+          productId: product[0],
+          quantity: product[1]
         }
       })
     })
@@ -66,7 +65,12 @@ router.put('/:userId/cart/save', onlyUserMiddleware, async (req, res, next) => {
       }
     })
 
-    order.update({isCart: false})
+    await order.update({isCart: false})
+    await order.create({
+      userId: req.params.userId,
+      isCart: true
+    })
+
     res.json(order)
   } catch (err) {
     next(err)
@@ -100,19 +104,27 @@ router.put(
         include: {model: Product}
       })
 
-      const orderItem = await OrderItems.findOrCreate({
+      const orderItem = await OrderItems.findOne({
         where: {
           orderId: order[0].dataValues.id,
           productId: req.params.productId
         }
       })
 
-      // Must ensure quantity sums with preexisting quantity on the orderItem model or frontend
-      await orderItem[0].update({
-        quantity: req.body.quantity
+      if (orderItem) {
+        await orderItem.update({
+          quantity: orderItem.quantity + req.body.quantity
+        })
+        res.status(201).json(orderItem)
+      }
+
+      const newItem = await OrderItems.create({
+        orderId: order[0].dataValues.id,
+        quantity: req.body.quantity,
+        productId: req.params.productId
       })
 
-      res.status(200).json(orderItem)
+      res.status(201).json(newItem)
     } catch (err) {
       next(err)
     }

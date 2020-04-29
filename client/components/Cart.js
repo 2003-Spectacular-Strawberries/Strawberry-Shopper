@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchOrder, deleteProduct} from '../store/order'
-import {fetchCart, removeItem} from '../store/cart'
+import {fetchOrder, deleteProduct, saveOrder} from '../store/order'
+import {fetchCart, removeItem, editItem} from '../store/cart'
 import {addQuantity} from '../store/add'
 import {me} from '../store/user'
 
@@ -15,9 +15,60 @@ class Cart extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleRemoval = this.handleRemoval.bind(this)
+    this.handleUpdate = this.handleUpdate.bind(this)
+    this.updateCart = this.updateCart.bind(this)
+    this.handleConfirmation = this.handleConfirmation.bind(this)
   }
 
-  async componentDidMount() {
+  handleChange(event) {
+    this.setState({
+      quantity: Number(event.target.value)
+    })
+  }
+
+  async handleUpdate(orderId, productId) {
+    if (orderId === 'guest') {
+      this.props.editItem(productId, this.state.quantity)
+    } else {
+      await this.props.addQuantity(
+        productId,
+        this.props.user.id,
+        this.state.quantity
+      )
+      this.props.fetchOrder(this.props.user.id)
+    }
+
+    const field = document.getElementById(productId)
+    field.value = ''
+  }
+
+  handleRemoval(orderId, productId) {
+    if (orderId === 'guest') {
+      this.props.removeItem(productId)
+    } else {
+      this.props.deleteProduct(orderId, productId)
+    }
+  }
+
+  async handleConfirmation(total) {
+    const userId = this.props.user.id || null
+    const email = this.props.info.email
+    const shipping = `${this.props.info.addressLine1}, ${
+      this.props.info.addressLine2
+    }, ${this.props.info.city}, ${this.props.info.state}, ${
+      this.props.info.zip
+    }`
+    const billing = shipping
+    const cart = this.props.user.id
+      ? Object.values(this.props.items)
+      : Object.values(this.props.cart)
+
+    await this.props.saveOrder(userId, email, shipping, billing, total, cart)
+
+    this.props.history.push(`/confirmation`)
+  }
+
+  async updateCart() {
     try {
       await this.props.me()
       if (this.props.user.id) {
@@ -29,18 +80,8 @@ class Cart extends React.Component {
     }
   }
 
-  handleChange(event) {
-    this.setState({
-      quantity: Number(event.target.value)
-    })
-  }
-
-  handleRemoval(orderId, productId) {
-    if (orderId === 'guest') {
-      this.props.removeItem(productId)
-    } else {
-      this.props.deleteProduct(orderId, productId)
-    }
+  componentDidMount() {
+    this.updateCart()
   }
 
   render() {
@@ -54,6 +95,15 @@ class Cart extends React.Component {
 
     return (
       <div>
+        <div>
+          {this.props.info.name ? (
+            <h1 style={{alignText: 'center'}}>
+              Review and Finalize Your Order:
+            </h1>
+          ) : (
+            <h1 style={{alignText: 'center'}}>Your Shopping Cart:</h1>
+          )}
+        </div>
         <table className="cart-container">
           <tbody className="cart">
             {cart.length ? (
@@ -65,11 +115,15 @@ class Cart extends React.Component {
                     <td className="cart-item">{quantity}</td>
                     <td className="cart-item">
                       <input
-                        className=" quantity-input"
+                        className="quantity-input"
+                        id={item.id}
                         type="text"
                         name="quantity"
                         onChange={this.handleChange}
                       />
+                    </td>
+                    <td className="cart-item">
+                      <img src={item.imageUrl} className="cart-image" />
                     </td>
                     <td className="cart-item">{item.name}</td>
                     <td className="cart-item">
@@ -80,13 +134,7 @@ class Cart extends React.Component {
                       <button
                         id="delete"
                         type="submit"
-                        onClick={() =>
-                          this.props.addQuantity(
-                            item.id,
-                            this.props.user.id,
-                            this.state.quantity
-                          )
-                        }
+                        onClick={() => this.handleUpdate(orderId, item.id)}
                         className="btn-outline"
                       >
                         Update
@@ -119,11 +167,23 @@ class Cart extends React.Component {
             </tr>
           </tbody>
         </table>
-        <Link to={`/checkout/${orderId}`}>
-          <button type="submit" className="btn">
-            Checkout
-          </button>
-        </Link>
+        <div>
+          {this.props.info.name ? (
+            <button
+              type="submit"
+              className="btn"
+              onClick={() => this.handleConfirmation(total)}
+            >
+              Submit Order
+            </button>
+          ) : (
+            <Link to={`/checkout/${orderId}`}>
+              <button type="submit" className="btn">
+                Checkout
+              </button>
+            </Link>
+          )}
+        </div>
       </div>
     )
   }
@@ -134,7 +194,8 @@ const mapState = state => {
     items: state.order.items,
     user: state.user,
     cart: state.cart,
-    orderId: state.order.orderId
+    orderId: state.order.orderId,
+    info: state.info
   }
 }
 
@@ -146,6 +207,9 @@ const mapDispatch = dispatch => ({
   addQuantity: (productId, userId, quantity) =>
     dispatch(addQuantity(productId, userId, quantity)),
   removeItem: productId => dispatch(removeItem(productId)),
+  editItem: (productId, quantity) => dispatch(editItem(productId, quantity)),
+  saveOrder: (userId, email, shipping, billing, total, cart) =>
+    dispatch(saveOrder(userId, email, shipping, billing, total, cart)),
   me: () => dispatch(me())
 })
 

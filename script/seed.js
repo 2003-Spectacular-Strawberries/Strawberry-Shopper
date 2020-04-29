@@ -254,7 +254,7 @@ async function seed() {
       shipping: '23 Berry Boulevard, Straw, SB, 11123',
       billing: '23 Berry Boulevard, Straw, SB, 11123',
       price: 10.99,
-      isCart: false
+      isCart: true
     }),
     Order.create({
       userId: 2,
@@ -262,7 +262,7 @@ async function seed() {
       shipping: '107 Straw Street, Berry, SB, 10003',
       billing: '107 Straw Street, Berry, SB, 10003',
       price: 99.99,
-      isCart: false
+      isCart: true
     }),
     Order.create({userId: 3, isCart: true})
   ])
