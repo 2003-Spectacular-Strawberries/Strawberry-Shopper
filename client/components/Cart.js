@@ -2,8 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchOrder, deleteProduct} from '../store/order'
-import {fetchGuestCart} from '../store/cart'
+import {fetchCart, removeItem} from '../store/cart'
 import {addQuantity} from '../store/add'
+import {me} from '../store/user'
 
 class Cart extends React.Component {
   constructor() {
@@ -13,13 +14,18 @@ class Cart extends React.Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleRemoval = this.handleRemoval.bind(this)
   }
 
-  componentDidMount() {
-    if (this.props.user.id) {
-      this.props.fetchOrder(this.props.user.id)
-    } else {
-      this.props.fetchGuestCart()
+  async componentDidMount() {
+    try {
+      await this.props.me()
+      if (this.props.user.id) {
+        await this.props.fetchOrder(this.props.user.id)
+      }
+      this.props.fetchCart()
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -29,14 +35,22 @@ class Cart extends React.Component {
     })
   }
 
-  render() {
-    const cart =
-      this.props.order.products || Object.values(this.props.cart) || []
-    const id = this.props.order.id || 'guest'
-    let total = 0
+  handleRemoval(orderId, productId) {
+    if (orderId === 'guest') {
+      this.props.removeItem(productId)
+    } else {
+      this.props.deleteProduct(orderId, productId)
+    }
+  }
 
-    console.log('this.props', this.props)
-    console.log('cart', cart)
+  render() {
+    const orderId = this.props.orderId || 'guest'
+
+    const cart = this.props.user.id
+      ? Object.values(this.props.items)
+      : Object.values(this.props.cart)
+
+    let total = 0
 
     return (
       <div>
@@ -82,7 +96,7 @@ class Cart extends React.Component {
                       <button
                         id="delete"
                         type="submit"
-                        onClick={() => this.props.deleteProduct(id, item.id)}
+                        onClick={() => this.handleRemoval(orderId, item.id)}
                         className="btn"
                       >
                         Remove
@@ -105,7 +119,7 @@ class Cart extends React.Component {
             </tr>
           </tbody>
         </table>
-        <Link to={`/checkout/${id}`}>
+        <Link to={`/checkout/${orderId}`}>
           <button type="submit" className="btn">
             Checkout
           </button>
@@ -117,19 +131,22 @@ class Cart extends React.Component {
 
 const mapState = state => {
   return {
-    order: state.order,
+    items: state.order.items,
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
+    orderId: state.order.orderId
   }
 }
 
 const mapDispatch = dispatch => ({
   fetchOrder: userId => dispatch(fetchOrder(userId)),
-  fetchGuestCart: () => dispatch(fetchGuestCart()),
+  fetchCart: () => dispatch(fetchCart()),
   deleteProduct: (orderId, productId) =>
     dispatch(deleteProduct(orderId, productId)),
   addQuantity: (productId, userId, quantity) =>
-    dispatch(addQuantity(productId, userId, quantity))
+    dispatch(addQuantity(productId, userId, quantity)),
+  removeItem: productId => dispatch(removeItem(productId)),
+  me: () => dispatch(me())
 })
 
 export default connect(mapState, mapDispatch)(Cart)

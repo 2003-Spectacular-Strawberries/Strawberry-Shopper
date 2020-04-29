@@ -42,6 +42,7 @@ passport.deserializeUser(async (id, done) => {
 })
 
 const createApp = () => {
+  console.log('creating App')
   // logging middleware
   app.use(morgan('dev'))
 
@@ -109,22 +110,24 @@ const startListening = () => {
 const syncDb = () => db.sync()
 
 async function bootApp() {
-  console.log('booting app')
+  console.log('booting App')
   await sessionStore.sync()
-  console.log('awaited once')
+  console.log('await 1')
   await syncDb()
-  console.log('awaited twice')
+  console.log('await 2')
   await createApp()
-  console.log('awaited 3x')
+  console.log('await 3')
   await startListening()
-  console.log('awaited 4x')
+  console.log('await 4')
 }
 // This evaluates as true when this file is run directly from the command line,
 // i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
 if (require.main === module) {
+  console.log('invoke bootApp')
   bootApp()
 } else {
+  console.log('invoke createApp')
   createApp()
 }

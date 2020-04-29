@@ -4,11 +4,12 @@ import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/products'
 import CategoryForm from './productsByCategory'
 import {addQuantity} from '../store/add'
+import {updateCart} from '../store/cart'
+
 
 class AllProducts extends React.Component {
   constructor() {
     super()
-
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
@@ -27,12 +28,22 @@ class AllProducts extends React.Component {
     const {user} = this.props
     // This will add one item to the cart on the AllProducts page for the selected item with the corresponding add button
     let productId = Number(event.target.parentNode.id)
-    await this.props.addQuantity(productId, user.id, 1)
-    this.props.history.push('/cart')
+
+    if (user.id) {
+      await this.props.addQuantity(productId, user.id, 1)
+    } else {
+      let item
+      this.props.products.forEach(function(product) {
+        if (productId === product.id) item = product
+      })
+      await this.props.updateCart(item, 1)
+    }
+
+    this.props.history.push(`/cart`)
   }
 
   render() {
-    const {products} = this.props.products
+    const products = this.props.products
 
     return (
       <div className="all-products-container">
@@ -68,7 +79,7 @@ class AllProducts extends React.Component {
 }
 
 const mapState = state => ({
-  products: state.products,
+  products: state.products.products,
   user: state.user,
   category: state.category
 })
@@ -76,7 +87,8 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   fetchProducts: category => dispatch(fetchProducts(category)),
   addQuantity: (productId, userId, quantity) =>
-    dispatch(addQuantity(productId, userId, quantity))
+    dispatch(addQuantity(productId, userId, quantity)),
+  updateCart: (item, quantity) => dispatch(updateCart(item, quantity))
 })
 
 export default connect(mapState, mapDispatch)(AllProducts)

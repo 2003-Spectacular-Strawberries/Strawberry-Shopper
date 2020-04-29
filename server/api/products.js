@@ -41,7 +41,6 @@ router.get('/category/:category', async (req, res, next) => {
 })
 
 router.post('/', isAdminMiddleware, async (req, res, next) => {
-  console.log('REQ.BODY', req.body)
   try {
     const product = await Product.create({
       name: req.body.name,
