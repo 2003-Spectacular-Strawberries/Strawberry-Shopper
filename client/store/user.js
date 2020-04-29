@@ -102,7 +102,7 @@ const userReducer = (state = initialState, action) => {
     case GET_USER:
       return action.user
     case REMOVE_USER:
-      return state
+      return {}
     case SET_USER:
       return action.user
     case FETCH_USER:
