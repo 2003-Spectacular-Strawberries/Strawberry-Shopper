@@ -6,6 +6,7 @@ import CategoryForm from './productsByCategory'
 import {addQuantity} from '../store/add'
 import {updateCart} from '../store/cart'
 
+
 class AllProducts extends React.Component {
   constructor() {
     super()
