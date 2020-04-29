@@ -80,11 +80,11 @@ const orderReducer = (state = initialState, action) => {
       return order
     }
     case DELETED_PRODUCT: {
-      const orderProducts = state.order.products
+      const orderProducts = state.products
       const filteredOrder = orderProducts.filter(
         product => product.id !== action.productId
       )
-      state.order.products = filteredOrder
+      state.products = filteredOrder
       return {...state}
     }
     default:
