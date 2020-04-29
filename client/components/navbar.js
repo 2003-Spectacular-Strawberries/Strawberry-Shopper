@@ -34,7 +34,7 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin, user}) => (
             <Link to="/cart" className="nav-item">
               {user.firstName}'s Cart
             </Link>
-            <a href="#" onClick={handleClick}>
+            <a href="#" className="nav-item" onClick={handleClick}>
               Logout
             </a>
           </div>
@@ -58,7 +58,7 @@ const Navbar = ({handleClick, isLoggedIn, isAdmin, user}) => (
             <Link to="/cart" className="nav-item">
               {user.firstName}'s Cart
             </Link>
-            <a href="#" onClick={handleClick}>
+            <a href="#" className="nav-item" onClick={handleClick}>
               Logout
             </a>
           </div>
